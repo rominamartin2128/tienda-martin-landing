@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Martín - Dermocosmética</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Tienda Martín</h1>
+    <nav>
+      <ul>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#aplicacion">Cómo aplicarlos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#auth">Iniciar sesión</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <p>Los productos están diseñados para las distintas necesidades de tu piel.</p>
+  </section>
+
+  <section id="productos" class="productos">
+    <h2>Nuestros productos</h2>
+    <div id="productos-lista" class="productos-lista"></div>
+  </section>
+
+  <section id="aplicacion" class="aplicacion">
+    <h2>Cómo aplicarlos</h2>
+    <div class="pasos">
+      <div><strong>Serum:</strong> Aplicar 2 o 3 gotitas después de la limpieza facial.</div>
+      <div><strong>Tónico:</strong> Humedecer un pad o algodón y esparcir por el rostro.</div>
+      <div><strong>Crema:</strong> Aplicar en rostro y cuello, sellar la rutina.</div>
+    </div>
+  </section>
+
+  <section id="contacto" class="contacto">
+    <h2>Contacto</h2>
+    <p>Para asesoramiento y/o concretar compras:</p>
+    <a href="mailto:martinromina137@gmail.com">martinromina137@gmail.com</a>
+  </section>
+
+  <section id="auth" class="auth">
+    <h2>Autenticación</h2>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Usuario" required>
+      <input type="password" id="password" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+    <form id="register-form">
+      <input type="text" id="new-username" placeholder="Nuevo usuario" required>
+      <input type="password" id="new-password" placeholder="Nueva contraseña" required>
+      <button type="submit">Crear cuenta</button>
+    </form>
+  </section>
+
+  <div id="carrito" class="carrito oculto">
+    <h2>Carrito</h2>
+    <ul id="carrito-items"></ul>
+    <button id="vaciar-carrito">Vaciar carrito</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

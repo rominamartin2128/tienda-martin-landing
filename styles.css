@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f2ec;
+  color: #4e3b31;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #d9c6b0;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: #4e3b31;
+  font-weight: bold;
+}
+
+.hero {
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.3rem;
+  background-color: #f1e9e1;
+}
+
+.productos, .aplicacion, .contacto, .auth {
+  padding: 2rem;
+  text-align: center;
+}
+
+.productos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.producto {
+  border: 1px solid #d6c5b2;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 1rem;
+  width: 250px;
+}
+
+.producto img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.producto h3 {
+  margin: 0.5rem 0;
+}
+
+.producto button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background-color: #bda08a;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pasos div {
+  margin: 1rem 0;
+}
+
+.auth form {
+  margin: 1rem auto;
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 0.5rem;
+}
+
+.auth input, .auth button {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.auth button {
+  background-color: #bda08a;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.carrito {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.oculto {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .productos-lista {
+    flex-direction: column;
+    align-items: center;
+  }
+}
