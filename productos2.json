@@ -1,17 +1,21 @@
 [
   {
-    "nombre": "Serum Iluminador",
-    "descripcion": "Tratamiento para manchas y luminosidad.",
-    "imagen": "https://github.com/rominamartin2128/tienda-martin-landing/blob/main/Imagen.png"
+    "id": 1,
+    "nombre": "Sérum",
+    "descripcion": "Diseñado para tratar manchas, brindar luminosidad e hidratar la piel.",
+    "imagen": "serum.jpg"
   },
   {
-    "nombre": "Tónico Equilibrante",
-    "descripcion": "Regula el pH y calma la piel.",
-    "imagen": "https://github.com/rominamartin2128/tienda-martin-landing/blob/main/Imagen2.png"
+    "id": 2,
+    "nombre": "Tónico",
+    "descripcion": "Diseñado para regular el pH de la piel.",
+    "imagen": "tonico.jpg"
   },
   {
-    "nombre": "Crema Hidratante",
-    "descripcion": "Hidratación profunda para todo tipo de piel.",
-    "imagen": "https://github.com/rominamartin2128/tienda-martin-landing/blob/main/Imagen3.png"
+    "id": 3,
+    "nombre": "Crema",
+    "descripcion": "Diseñadas para distintos tipos de piel: secas, grasas, mixtas, sensibles y con manchas.",
+    "imagen": "crema.jpg"
   }
 ]
+
