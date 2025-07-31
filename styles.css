@@ -160,4 +160,17 @@ nav a {
 .btn-comprar:hover {
   background-color: #8a6545;
 }
+.btn-catalogo {
+  display: inline-block;
+  margin-top: 2rem;
+  background-color: #a67c52;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+.btn-catalogo:hover {
+  background-color: #8a6545;
+}
 
