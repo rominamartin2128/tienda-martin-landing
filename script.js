@@ -51,3 +51,24 @@ function renderCarrito() {
   });
   document.getElementById('carrito').classList.remove('oculto');
 }
+
+fetch('productos2.json')
+  .then(res => res.json())
+  .then(data => {
+    const contenedor = document.getElementById('productos');
+    if (!contenedor) return; // Para que no tire error si no está en esa página
+    data.forEach(prod => {
+      contenedor.innerHTML += `
+        <div class="producto">
+          <img src="${prod.imagen}" alt="${prod.nombre}">
+          <h3>${prod.nombre}</h3>
+          <p>${prod.descripcion}</p>
+          <button class="btn-comprar" onclick="agregarAlCarrito('${prod.nombre}')">Comprar</button>
+        </div>
+      `;
+    });
+  });
+
+function agregarAlCarrito(nombre) {
+  alert(`Agregaste "${nombre}" al carrito`);
+}
