@@ -3,19 +3,18 @@
     "id": 1,
     "nombre": "Sérum",
     "descripcion": "Diseñado para tratar manchas, brindar luminosidad e hidratar la piel.",
-    "imagen": "serum.jpg"
+    "imagen": "Imagen.png"
   },
   {
     "id": 2,
     "nombre": "Tónico",
     "descripcion": "Diseñado para regular el pH de la piel.",
-    "imagen": "tonico.jpg"
+    "imagen": "Imagen2.png"
   },
   {
     "id": 3,
     "nombre": "Crema",
     "descripcion": "Diseñadas para distintos tipos de piel: secas, grasas, mixtas, sensibles y con manchas.",
-    "imagen": "crema.jpg"
+    "imagen": "Imagen3.png"
   }
 ]
-
