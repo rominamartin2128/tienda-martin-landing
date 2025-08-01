@@ -132,9 +132,9 @@ nav a {
 }
 .grid-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  padding: 1rem;
+  padding: 2rem;
 }
 .producto {
   background-color: #f8f4f0;
@@ -175,8 +175,8 @@ nav a {
 }
 .producto img {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
+  height: 200px;
+  object-fit: contain;
+  background-color: #fff;
   border-radius: 8px;
 }
-
