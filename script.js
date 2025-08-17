@@ -1,4 +1,5 @@
 let carrito = [];
+let productos = [];
 
 // Cargar JSON de productos
 fetch('productos.json')
@@ -89,6 +90,7 @@ function toggleCarrito() {
   const carritoDiv = document.getElementById('carrito');
   carritoDiv.classList.toggle('collapsed');
 }
+
 
 
 
