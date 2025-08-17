@@ -1,74 +1,89 @@
+let productos = [];
 let carrito = [];
 
-document.addEventListener('DOMContentLoaded', () => {
-  fetch('productos.json')
-    .then(res => res.json())
-    .then(data => mostrarProductos(data));
-
-  document.getElementById('login-form').addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Inicio de sesión simulado ✅');
+// Cargar JSON de productos
+fetch('productos.json')
+  .then(response => response.json())
+  .then(data => {
+    productos = data;
+    mostrarCatalogo();
+    cargarCarrito();
   });
 
-  document.getElementById('register-form').addEventListener('submit', e => {
-    e.preventDefault();
-    alert('Cuenta creada correctamente ✅');
-  });
-
-  document.getElementById('vaciar-carrito').addEventListener('click', () => {
-    carrito = [];
-    renderCarrito();
-  });
-});
-
-function mostrarProductos(productos) {
-  const contenedor = document.getElementById('productos-lista');
+// Mostrar productos en el catálogo
+function mostrarCatalogo() {
+  const catalogo = document.getElementById('catalogo');
+  catalogo.innerHTML = '';
   productos.forEach(producto => {
     const div = document.createElement('div');
     div.classList.add('producto');
     div.innerHTML = `
-      <img src=\"${producto.imagen}\" alt=\"${producto.nombre}\">
+      <img src="${producto.imagen}" alt="${producto.nombre}">
       <h3>${producto.nombre}</h3>
-      <p>${producto.descripcion}</p>
-      <button onclick='agregarAlCarrito(${JSON.stringify(producto)})'>Agregar al carrito</button>
+      <p>Precio: $${producto.precio}</p>
+      <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+      <details>
+        <summary>Ver descripción</summary>
+        <ul>${producto.descripcion.map(p => `<li>${p}</li>`).join('')}</ul>
+      </details>
     `;
-    contenedor.appendChild(div);
+    catalogo.appendChild(div);
   });
 }
 
-function agregarAlCarrito(producto) {
+// Agregar producto al carrito
+function agregarAlCarrito(id) {
+  const producto = productos.find(p => p.id === id);
   carrito.push(producto);
-  renderCarrito();
+  guardarCarrito();
+  mostrarCarrito();
 }
 
-function renderCarrito() {
-  const contenedor = document.getElementById('carrito-items');
-  contenedor.innerHTML = '';
-  carrito.forEach((item, index) => {
-    const li = document.createElement('li');
-    li.textContent = `${item.nombre}`;
-    contenedor.appendChild(li);
+// Guardar carrito en localStorage
+function guardarCarrito() {
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+// Cargar carrito desde localStorage
+function cargarCarrito() {
+  const carritoGuardado = JSON.parse(localStorage.getItem('carrito'));
+  if(carritoGuardado) {
+    carrito = carritoGuardado;
+    mostrarCarrito();
+  }
+}
+
+// Mostrar carrito
+function mostrarCarrito() {
+  const items = document.getElementById('itemsCarrito');
+  items.innerHTML = '';
+  let total = 0;
+  carrito.forEach((producto, index) => {
+    const div = document.createElement('div');
+    div.textContent = `${producto.nombre} - $${producto.precio}`;
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.onclick = () => {
+      carrito.splice(index, 1);
+      guardarCarrito();
+      mostrarCarrito();
+    };
+    div.appendChild(btnEliminar);
+    items.appendChild(div);
+    total += producto.precio;
   });
-  document.getElementById('carrito').classList.remove('oculto');
+  document.getElementById('totalCarrito').textContent = total;
 }
 
-fetch('productos2.json')
-  .then(res => res.json())
-  .then(data => {
-    const contenedor = document.getElementById('productos');
-    if (!contenedor) return; // Para que no tire error si no está en esa página
-    data.forEach(prod => {
-      contenedor.innerHTML += `
-        <div class="producto">
-          <img src="${prod.imagen}" alt="${prod.nombre}">
-          <h3>${prod.nombre}</h3>
-          <p>${prod.descripcion}</p>
-          <button class="btn-comprar" onclick="agregarAlCarrito('${prod.nombre}')">Comprar</button>
-        </div>
-      `;
-    });
-  });
+// Finalizar compra (solo simulación)
+document.getElementById('btnFinalizarCompra').addEventListener('click', () => {
+  if(carrito.length === 0) {
+    alert('El carrito está vacío');
+    return;
+  }
+  alert('Compra finalizada. Próximamente se enviará un correo y se integrará la pasarela de pago.');
+  carrito = [];
+  guardarCarrito();
+  mostrarCarrito();
+});
 
-function agregarAlCarrito(nombre) {
-  alert(`Agregaste "${nombre}" al carrito`);
-}
