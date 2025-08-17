@@ -1,4 +1,3 @@
-let productos = [];
 let carrito = [];
 
 // Cargar JSON de productos
@@ -86,4 +85,5 @@ document.getElementById('btnFinalizarCompra').addEventListener('click', () => {
   guardarCarrito();
   mostrarCarrito();
 });
+
 
