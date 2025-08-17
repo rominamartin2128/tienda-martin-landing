@@ -7,52 +7,37 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  
-  <!-- Título de la tienda -->
-  <header style="text-align:center; padding:20px;">
-    <h1>Tienda Martin - Dermocosmética</h1>
+  <header>
+    <h1>Tienda Martin</h1>
+    <nav>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#carrito">Carrito</a>
+    </nav>
   </header>
 
-  <!-- Contenedor del catálogo -->
-  <div id="catalogo"></div>
+  <main>
+    <!-- Catálogo -->
+    <section id="catalogo">
+      <h2>Catálogo de Serums</h2>
+      <div class="productos-container"></div>
+    </section>
 
-  <!-- Carrito flotante -->
-  <div id="carrito" class="collapsed">
-    <h2 onclick="toggleCarrito()">Carrito 🛒</h2>
-    <div id="carritoItems"></div>
-    <span id="totalCarrito">0</span>
-    <button id="btnFinalizarCompra">Finalizar compra</button>
-  </div>
+    <!-- Carrito -->
+    <section id="carrito">
+      <h2>Carrito de Compras</h2>
+      <div id="itemsCarrito"></div>
+      <p>Total: $<span id="totalCarrito">0</span></p>
+      <button id="btnFinalizarCompra">Finalizar Compra</button>
+    </section>
+  </main>
 
-  <!-- Script principal -->
-  <script>
-    // --- Variables ---
-    let carrito = [];
-    let productos = [];
+  <footer>
+    <p>&copy; 2025 Tienda Martin</p>
+  </footer>
 
-    // --- Cargar JSON de productos ---
-    fetch('productos.json')
-      .then(response => response.json())
-      .then(data => {
-        productos = data;
-        mostrarCatalogo();
-        cargarCarrito();
-      });
-
-    // --- Mostrar productos en el catálogo ---
-    function mostrarCatalogo() {
-      const catalogo = document.getElementById('catalogo');
-      catalogo.innerHTML = '';
-      productos.forEach(producto => {
-        const div = document.createElement('div');
-        div.classList.add('producto');
-        div.innerHTML = `
-          <img src="${producto.imagen}" alt="${producto.nombre}">
-          <h3>${producto.nombre}</h3>
-          <p>Precio: $${producto.precio}</p>
-          <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-          <details>
-            <
+  <script src="script.js"></script>
+</body>
+</html>
 
 
 
