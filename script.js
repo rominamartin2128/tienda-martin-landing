@@ -1,18 +1,42 @@
+// Declarar carrito y productos
 let carrito = [];
 let productos = [];
 
-// Cargar JSON de productos
-fetch('productos.json')
-  .then(response => response.json())
-  .then(data => {
-    productos = data;
-    mostrarCatalogo();
-    cargarCarrito();
-  });
+// Esperar a que cargue el DOM
+document.addEventListener('DOMContentLoaded', () => {
 
-// Mostrar productos en el catálogo
+  // Cargar JSON de productos
+  fetch('productos.json')
+    .then(response => response.json())
+    .then(data => {
+      productos = data;
+      mostrarCatalogo();
+      cargarCarrito();
+    })
+    .catch(error => console.error("Error cargando JSON:", error));
+
+  // Botón finalizar compra
+  const btnFinalizar = document.getElementById('btnFinalizarCompra');
+  if (btnFinalizar) {
+    btnFinalizar.addEventListener('click', () => {
+      if (carrito.length === 0) {
+        alert('El carrito está vacío');
+        return;
+      }
+      alert('Compra finalizada. Próximamente se enviará un correo y se integrará la pasarela de pago.');
+      carrito = [];
+      guardarCarrito();
+      mostrarCarrito();
+    });
+  }
+
+});
+
+// Función para mostrar catálogo
 function mostrarCatalogo() {
   const catalogo = document.getElementById('catalogo');
+  if (!catalogo) return;
+
   catalogo.innerHTML = '';
   productos.forEach(producto => {
     const div = document.createElement('div');
@@ -34,6 +58,8 @@ function mostrarCatalogo() {
 // Agregar producto al carrito
 function agregarAlCarrito(id) {
   const producto = productos.find(p => p.id === id);
+  if (!producto) return;
+
   carrito.push(producto);
   guardarCarrito();
   mostrarCarrito();
@@ -47,7 +73,7 @@ function guardarCarrito() {
 // Cargar carrito desde localStorage
 function cargarCarrito() {
   const carritoGuardado = JSON.parse(localStorage.getItem('carrito'));
-  if(carritoGuardado) {
+  if (carritoGuardado) {
     carrito = carritoGuardado;
     mostrarCarrito();
   }
@@ -56,8 +82,12 @@ function cargarCarrito() {
 // Mostrar carrito
 function mostrarCarrito() {
   const items = document.getElementById('itemsCarrito');
+  const totalCarrito = document.getElementById('totalCarrito');
+  if (!items || !totalCarrito) return;
+
   items.innerHTML = '';
   let total = 0;
+
   carrito.forEach((producto, index) => {
     const div = document.createElement('div');
     div.textContent = `${producto.nombre} - $${producto.precio}`;
@@ -72,25 +102,8 @@ function mostrarCarrito() {
     items.appendChild(div);
     total += producto.precio;
   });
-  document.getElementById('totalCarrito').textContent = total;
+
+  totalCarrito.textContent = total;
 }
-
-// Finalizar compra (solo simulación)
-document.getElementById('btnFinalizarCompra').addEventListener('click', () => {
-  if(carrito.length === 0) {
-    alert('El carrito está vacío');
-    return;
-  }
-  alert('Compra finalizada. Próximamente se enviará un correo y se integrará la pasarela de pago.');
-  carrito = [];
-  guardarCarrito();
-  mostrarCarrito();
-});
-function toggleCarrito() {
-  const carritoDiv = document.getElementById('carrito');
-  carritoDiv.classList.toggle('collapsed');
-}
-
-
 
 
