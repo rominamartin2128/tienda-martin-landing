@@ -14,7 +14,7 @@
   },
   {
     "id": 2,
-    "nombre": "Serum Humectacion y Firmeza",
+    "nombre": "Serum Humectación y Firmeza",
     "descripcion": [
       "Hidratación profunda y equilibrada.",
       "Efecto reafirmante.",
@@ -35,62 +35,6 @@
       "Mejora visible de la piel.",
       "Reparación progresiva."
     ],
-    "precio": 38000,
-    "imagen": "img/serum-antioxidante-plus.jpg"
-  },
-  {
-    "id": 4,
-    "nombre": "Serum Reafirmante Antipolucion",
-    "descripcion": [
-      "Efecto lifting instantáneo.",
-      "Protección antipolución.",
-      "Cuidado avanzado.",
-      "Resultados rápidos.",
-      "Prevención activa."
-    ],
-    "precio": 38000,
-    "imagen": "img/serum-reafirmante-antipolucion.jpg"
-  },
-  {
-    "id": 5,
-    "nombre": "Serum Descongestivo",
-    "descripcion": [
-      "Efecto calmante inmediato.",
-      "Frescura y suavidad.",
-      "Cuidado específico para pieles sensibles.",
-      "Hidratación equilibrada.",
-      "Preparación para el maquillaje."
-    ],
-    "precio": 38000,
-    "imagen": "img/serum-descongestivo.jpg"
-  },
-  {
-    "id": 6,
-    "nombre": "Serum Vitamina C",
-    "descripcion": [
-      "Antioxidante potente.",
-      "Mejora del tono.",
-      "Firmeza y elasticidad.",
-      "Luminosidad instantánea.",
-      "Prevención y corrección."
-    ],
-    "precio": 40000,
-    "imagen": "img/serum-vitaminac.jpg"
-  },
-  {
-    "id": 7,
-    "nombre": "Serum Probio Piel Sensible",
-    "descripcion": [
-      "Alivio inmediato.",
-      "Fortalece la piel.",
-      "Equilibrio restaurado.",
-      "Equilibra la piel.",
-      "Complemento ideal."
-    ],
-    "precio": 38000,
-    "imagen": "img/serum-probio-piel-sensible.jpg"
-  }
-]
 
 
 
