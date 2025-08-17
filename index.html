@@ -1,43 +1,88 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tienda Martin - Dermocosmética</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"/>
+
+  <!-- EmailJS (antes del módulo) -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    // Reemplazá por tu Public Key de EmailJS
+    (function(){ emailjs.init("EMAILJS_PUBLIC_KEY"); })();
+  </script>
 </head>
 <body>
-  <header>
-    <h1>Tienda Martin</h1>
-    <nav>
-      <a href="#catalogo">Catálogo</a>
-      <a href="#carrito">Carrito</a>
+  <header class="topbar">
+    <h1 class="brand">Tienda Martin</h1>
+    <nav class="nav">
+      <button id="btnOpenLogin" class="btn outline">Ingresar</button>
+      <button id="btnOpenRegister" class="btn outline">Crear cuenta</button>
+      <span id="userInfo" class="user-info"></span>
+      <button id="btnLogout" class="btn danger" style="display:none">Salir</button>
     </nav>
   </header>
 
   <main>
     <!-- Catálogo -->
-    <section id="catalogo">
+    <section id="catalogo" class="section">
       <h2>Catálogo de Serums</h2>
-      <div class="productos-container"></div>
+      <div class="productos-container" id="productosContainer"></div>
     </section>
 
     <!-- Carrito -->
-    <section id="carrito">
+    <section id="carrito" class="section">
       <h2>Carrito de Compras</h2>
-      <div id="itemsCarrito"></div>
-      <p>Total: $<span id="totalCarrito">0</span></p>
-      <button id="btnFinalizarCompra">Finalizar Compra</button>
+      <div id="itemsCarrito" class="cart-items"></div>
+      <div class="cart-footer">
+        <div>Total: $<span id="totalCarrito">0</span></div>
+        <div class="cart-actions">
+          <button id="btnVaciar" class="btn danger">Vaciar</button>
+          <button id="btnFinalizarCompra" class="btn primary">Finalizar compra</button>
+          <!-- Botón de pago de ejemplo (reemplazá el link en script.js) -->
+          <button id="btnPagar" class="btn success">Pagar (ejemplo)</button>
+        </div>
+      </div>
+      <small class="hint">
+        * Para recibir el correo con tu orden, iniciá sesión o registrate.
+      </small>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 Tienda Martin</p>
-  </footer>
+  <!-- Modal Login -->
+  <dialog id="loginDialog" class="dialog">
+    <form method="dialog" class="card">
+      <h3>Ingresar</h3>
+      <label>Email</label>
+      <input type="email" id="loginEmail" required />
+      <label>Contraseña</label>
+      <input type="password" id="loginPassword" required />
+      <div class="row">
+        <button type="button" id="loginBtn" class="btn primary">Entrar</button>
+        <button class="btn">Cerrar</button>
+      </div>
+    </form>
+  </dialog>
 
-  <script src="script.js"></script>
+  <!-- Modal Registro -->
+  <dialog id="registerDialog" class="dialog">
+    <form method="dialog" class="card">
+      <h3>Crear cuenta</h3>
+      <label>Email</label>
+      <input type="email" id="registerEmail" required />
+      <label>Contraseña</label>
+      <input type="password" id="registerPassword" required />
+      <div class="row">
+        <button type="button" id="registerBtn" class="btn primary">Crear</button>
+        <button class="btn">Cerrar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Firebase + App -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
-
 
 
