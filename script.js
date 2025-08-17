@@ -85,5 +85,10 @@ document.getElementById('btnFinalizarCompra').addEventListener('click', () => {
   guardarCarrito();
   mostrarCarrito();
 });
+function toggleCarrito() {
+  const carritoDiv = document.getElementById('carrito');
+  carritoDiv.classList.toggle('collapsed');
+}
+
 
 
