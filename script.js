@@ -1,220 +1,149 @@
-// ======= CONFIGURACIÓN (REEMPLAZAR) =======
-const FIREBASE_CONFIG = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "TU_ID",
-  appId: "TU_APP_ID"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// --- Firebase config ---
+const firebaseConfig = {
+  apiKey: "AIzaSyA1bik0TgeAcBNcCSSIJwVCSSylj8skhOc",
+  authDomain: "tienda-martin.firebaseapp.com",
+  projectId: "tienda-martin",
+  storageBucket: "tienda-martin.appspot.com",
+  messagingSenderId: "813249212381",
+  appId: "1:813249212381:web:92472c9f06c029f7e79034"
 };
 
-// EmailJS: ya se inicializa en index.html con emailjs.init("EMAILJS_PUBLIC_KEY")
-const EMAILJS_SERVICE_ID = "TU_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = "TU_TEMPLATE_ID";
-
-// Botón de pago de ejemplo (podés usar tu link de preferencia de MP/Stripe/PayPal)
-const PAYMENT_LINK = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=REEMPLAZAR_CON_TU_PREF_ID";
-
-// ======= IMPORTS FIREBASE (CDN) =======
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-// ======= APP STATE =======
-let carrito = [];
-let productos = [];
-let authUser = null;
-
-// ======= INIT =======
-const app = initializeApp(FIREBASE_CONFIG);
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// DOM
-const contenedor = document.getElementById('productosContainer');
+// --- Variables ---
+let productos = [];
+let carrito = [];
+
+// --- Elementos ---
+const catalogo = document.getElementById('catalogo');
 const itemsCarrito = document.getElementById('itemsCarrito');
 const totalCarrito = document.getElementById('totalCarrito');
-const btnFinalizar = document.getElementById('btnFinalizarCompra');
-const btnVaciar = document.getElementById('btnVaciar');
-const btnPagar = document.getElementById('btnPagar');
-const userInfo = document.getElementById('userInfo');
+
+const btnRegistro = document.getElementById('btnRegistro');
+const btnLogin = document.getElementById('btnLogin');
 const btnLogout = document.getElementById('btnLogout');
-const btnOpenLogin = document.getElementById('btnOpenLogin');
-const btnOpenRegister = document.getElementById('btnOpenRegister');
-const loginDialog = document.getElementById('loginDialog');
-const registerDialog = document.getElementById('registerDialog');
-const loginBtn = document.getElementById('loginBtn');
-const registerBtn = document.getElementById('registerBtn');
+const btnFinalizarCompra = document.getElementById('btnFinalizarCompra');
+const btnPagar = document.getElementById('btnPagar');
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Cargar productos
-  try {
-    const res = await fetch('productos.json');
-    productos = await res.json();
-    renderCatalogo();
-  } catch (e) {
-    console.error('Error cargando productos.json', e);
-  }
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
 
-  // Cargar carrito guardado
-  const saved = localStorage.getItem('carrito');
-  carrito = saved ? JSON.parse(saved) : [];
-  renderCarrito();
-});
+// --- Cargar JSON de productos ---
+fetch('productos.json')
+  .then(res => res.json())
+  .then(data => { productos = data; mostrarCatalogo(); cargarCarrito(); });
 
-// ======= AUTH STATE =======
-onAuthStateChanged(auth, (user) => {
-  authUser = user || null;
-  if (authUser) {
-    userInfo.textContent = `Hola, ${authUser.email}`;
-    btnLogout.style.display = 'inline-block';
-    btnOpenLogin.style.display = 'none';
-    btnOpenRegister.style.display = 'none';
-  } else {
-    userInfo.textContent = '';
-    btnLogout.style.display = 'none';
-    btnOpenLogin.style.display = 'inline-block';
-    btnOpenRegister.style.display = 'inline-block';
-  }
-});
-
-// ======= UI HANDLERS =======
-btnOpenLogin?.addEventListener('click', () => loginDialog.showModal());
-btnOpenRegister?.addEventListener('click', () => registerDialog.showModal());
-
-loginBtn?.addEventListener('click', async () => {
-  const email = document.getElementById('loginEmail').value.trim();
-  const pass = document.getElementById('loginPassword').value.trim();
-  try {
-    await signInWithEmailAndPassword(auth, email, pass);
-    loginDialog.close();
-    alert('¡Bienvenido!');
-  } catch (e) {
-    alert(e.message);
-  }
-});
-
-registerBtn?.addEventListener('click', async () => {
-  const email = document.getElementById('registerEmail').value.trim();
-  const pass = document.getElementById('registerPassword').value.trim();
-  try {
-    await createUserWithEmailAndPassword(auth, email, pass);
-    registerDialog.close();
-    alert('¡Cuenta creada! Ya podés iniciar sesión.');
-  } catch (e) {
-    alert(e.message);
-  }
-});
-
-btnLogout?.addEventListener('click', async () => {
-  await signOut(auth);
-  alert('Sesión cerrada');
-});
-
-// ======= CATÁLOGO =======
-function renderCatalogo() {
-  if (!contenedor) return;
-  contenedor.innerHTML = '';
+// --- Funciones carrito ---
+function mostrarCatalogo() {
+  catalogo.innerHTML = '';
   productos.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'producto';
-    card.innerHTML = `
+    const div = document.createElement('div');
+    div.classList.add('producto');
+    div.innerHTML = `
       <img src="${p.imagen}" alt="${p.nombre}">
       <h3>${p.nombre}</h3>
-      <p>$${p.precio}</p>
-      <button class="btn primary" data-id="${p.id}">Agregar</button>
+      <p>Precio: $${p.precio}</p>
+      <button onclick="agregarAlCarrito(${p.id})">Agregar al carrito</button>
       <details>
         <summary>Ver descripción</summary>
-        <ul>${p.descripcion.map(d => `<li>${d}</li>`).join('')}</ul>
+        <ul>${p.descripcion.map(d=>`<li>${d}</li>`).join('')}</ul>
       </details>
     `;
-    contenedor.appendChild(card);
-  });
-
-  contenedor.querySelectorAll('button[data-id]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = Number(btn.getAttribute('data-id'));
-      const prod = productos.find(x => x.id === id);
-      if (prod) {
-        carrito.push(prod);
-        persistCarrito();
-        renderCarrito();
-      }
-    });
+    catalogo.appendChild(div);
   });
 }
 
-// ======= CARRITO =======
-function renderCarrito() {
-  if (!itemsCarrito || !totalCarrito) return;
+window.agregarAlCarrito = function(id){
+  const producto = productos.find(p => p.id === id);
+  carrito.push(producto);
+  guardarCarrito();
+  mostrarCarrito();
+}
+
+function guardarCarrito(){ localStorage.setItem('carrito', JSON.stringify(carrito)); }
+function cargarCarrito(){
+  const c = JSON.parse(localStorage.getItem('carrito'));
+  if(c){ carrito = c; mostrarCarrito(); }
+}
+
+function mostrarCarrito(){
   itemsCarrito.innerHTML = '';
   let total = 0;
-
-  carrito.forEach((p, idx) => {
+  carrito.forEach((p,i)=>{
+    const div = document.createElement('div');
+    div.textContent = `${p.nombre} - $${p.precio}`;
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.onclick = () => { carrito.splice(i,1); guardarCarrito(); mostrarCarrito(); };
+    div.appendChild(btnEliminar);
+    itemsCarrito.appendChild(div);
     total += p.precio;
-    const row = document.createElement('div');
-    row.className = 'cart-item';
-    row.innerHTML = `
-      <span>${p.nombre} - $${p.precio}</span>
-      <button class="btn danger" data-i="${idx}">Eliminar</button>
-    `;
-    itemsCarrito.appendChild(row);
   });
-
-  itemsCarrito.querySelectorAll('button[data-i]').forEach(b => {
-    b.addEventListener('click', () => {
-      const i = Number(b.getAttribute('data-i'));
-      carrito.splice(i, 1);
-      persistCarrito();
-      renderCarrito();
-    });
-  });
-
-  totalCarrito.textContent = String(total);
+  totalCarrito.textContent = total;
 }
 
-btnVaciar?.addEventListener('click', () => {
-  carrito = [];
-  persistCarrito();
-  renderCarrito();
-});
-
-// ======= FINALIZAR COMPRA =======
-btnFinalizar?.addEventListener('click', async () => {
-  if (carrito.length === 0) return alert('El carrito está vacío.');
-  if (!authUser) return alert('Iniciá sesión para recibir el resumen por email.');
-
+// --- Firebase Auth ---
+btnRegistro.onclick = async () => {
   try {
-    await enviarOrdenPorEmail(authUser.email, carrito);
-    alert('Orden enviada por email. Ahora podés proceder al pago.');
-  } catch (e) {
-    alert('No se pudo enviar el correo: ' + e);
+    await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    alert('Usuario registrado correctamente');
+  } catch(e){ alert(e.message); }
+}
+
+btnLogin.onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    alert('Login exitoso');
+  } catch(e){ alert(e.message); }
+}
+
+btnLogout.onclick = () => { signOut(auth); }
+
+// Detectar estado de sesión
+onAuthStateChanged(auth, user => {
+  if(user){
+    btnLogin.style.display = 'none';
+    btnRegistro.style.display = 'none';
+    btnLogout.style.display = 'inline-block';
+  } else {
+    btnLogin.style.display = 'inline-block';
+    btnRegistro.style.display = 'inline-block';
+    btnLogout.style.display = 'none';
   }
 });
 
-// ======= BOTÓN DE PAGO (EJEMPLO) =======
-btnPagar?.addEventListener('click', () => {
-  if (carrito.length === 0) return alert('Agregá productos antes de pagar.');
-  // Redirige a tu checkout (MercadoPago / Stripe / PayPal)
-  window.location.href = PAYMENT_LINK;
-});
+// --- EmailJS ---
+const EMAILJS_SERVICE_ID = "service_sby0arr";
+const EMAILJS_TEMPLATE_ID = "template_zwt9vzb";
 
-// ======= EMAILJS =======
-function enviarOrdenPorEmail(toEmail, items) {
-  const total = items.reduce((acc, p) => acc + p.precio, 0);
-  const detalle = items.map(p => `• ${p.nombre} - $${p.precio}`).join('\n');
+btnFinalizarCompra.onclick = () => {
+  if(carrito.length === 0) return alert('El carrito está vacío');
+  if(!auth.currentUser) return alert('Debes estar logueado para finalizar la compra');
 
-  const params = {
-    to_email: toEmail,
-    order_items: detalle,
-    order_total: total,
-    // podés sumar más campos que definiste en tu template
-  };
+  const email = auth.currentUser.email;
+  const detalle = carrito.map(p=>`• ${p.nombre} - $${p.precio}`).join('\n');
+  const total = carrito.reduce((acc,p)=>acc+p.precio,0);
 
-  return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params);
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, { to_email: email, order_items: detalle, order_total: total })
+    .then(()=> alert('Orden enviada por correo!'))
+    .catch(err => console.error(err));
+
+  carrito = [];
+  guardarCarrito();
+  mostrarCarrito();
 }
 
-// ======= STORAGE =======
-function persistCarrito() {
-  localStorage.setItem('carrito', JSON.stringify(carrito));
+// --- MercadoPago Sandbox ---
+const MP_LINK = "https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=TEST-5540731994144267-081720-43bb32666c0c868ef8c49f2377c7a124-392810133";
+
+btnPagar.onclick = () => {
+  if(carrito.length === 0) return alert('Agregá productos al carrito primero');
+  window.location.href = MP_LINK;
 }
 
 
