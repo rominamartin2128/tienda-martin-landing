@@ -3,18 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda Martin</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Tienda Martin - Dermocosmética</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1>Tienda Martin - Dermocosmética</h1>
+    <h1>Tienda Martin</h1>
     <div id="auth">
-      <input type="email" id="email" placeholder="Email">
+      <input type="email" id="email" placeholder="Correo">
       <input type="password" id="password" placeholder="Contraseña">
-      <button id="btnRegistro">Registrarse</button>
       <button id="btnLogin">Login</button>
-      <button id="btnLogout" style="display:none;">Logout</button>
+      <button id="btnRegister">Crear cuenta</button>
     </div>
   </header>
 
@@ -26,19 +25,17 @@
       <div id="itemsCarrito"></div>
       <p>Total: $<span id="totalCarrito">0</span></p>
       <button id="btnFinalizarCompra">Finalizar Compra</button>
-      <button id="btnPagar">Pagar</button>
+      <button id="btnPagar">Pagar (ejemplo)</button>
     </aside>
   </main>
 
-  <!-- Firebase SDK -->
-  <script type="module" src="script.js"></script>
-  <!-- EmailJS -->
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-  <script>
-    (function(){ emailjs.init("LnLdxuoHCqcG4Fdoj"); })();
-  </script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
