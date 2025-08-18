@@ -3,38 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda Martin - Dermocosmética</title>
+  <title>Tienda Martin</title>
   <link rel="stylesheet" href="styles.css">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 </head>
 <body>
   <header>
     <h1>Tienda Martin</h1>
-    <div id="auth">
-      <input type="email" id="email" placeholder="Correo">
+    <div id="loginSection">
+      <input type="email" id="email" placeholder="Email">
       <input type="password" id="password" placeholder="Contraseña">
       <button id="btnLogin">Login</button>
-      <button id="btnRegister">Crear cuenta</button>
+      <button id="btnRegister">Registrarse</button>
+      <button id="btnLogout" style="display:none;">Logout</button>
+      <span id="userDisplay"></span>
     </div>
   </header>
 
   <main>
-    <section id="catalogo"></section>
+    <div id="catalogo"></div>
 
-    <aside>
-      <h2>Carrito</h2>
-      <div id="itemsCarrito"></div>
-      <p>Total: $<span id="totalCarrito">0</span></p>
-      <button id="btnFinalizarCompra">Finalizar Compra</button>
-      <button id="btnPagar">Pagar (ejemplo)</button>
-    </aside>
+    <h2>Carrito</h2>
+    <div id="itemsCarrito"></div>
+    <p>Total: $<span id="totalCarrito">0</span></p>
+    <button id="btnFinalizarCompra">Finalizar compra</button>
+    <button id="btnPagar" style="display:none;">Pagar con Mercado Pago</button>
   </main>
 
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
