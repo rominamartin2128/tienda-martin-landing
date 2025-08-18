@@ -110,5 +110,56 @@ function mostrarCarrito() {
   let total = 0;
   carrito.forEach((producto, index) => {
     const div = document.createElement('div');
-    div.textContent = `${producto.n
+    div.textContent = `${producto.nombre} - $${producto.precio}`;
+    const btnEliminar = document.createElement('button');
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.onclick = () => {
+      carrito.splice(index, 1);
+      guardarCarrito();
+      mostrarCarrito();
+    };
+    div.appendChild(btnEliminar);
+    items.appendChild(div);
+    total += producto.precio;
+  });
+  document.getElementById('totalCarrito').textContent = total;
+}
+
+// ---------------------------
+// Finalizar compra + EmailJS
+// ---------------------------
+document.getElementById('btnFinalizarCompra').addEventListener('click', () => {
+  if(carrito.length === 0) {
+    alert('El carrito está vacío');
+    return;
+  }
+
+  // Enviar correo con EmailJS
+  const user = auth.currentUser;
+  if(!user) {
+    alert("Debes estar logueado para finalizar la compra.");
+    return;
+  }
+
+  const templateParams = {
+    to_name: user.email,
+    message: carrito.map(p => `${p.nombre} - $${p.precio}`).join('\n'),
+    total: carrito.reduce((sum, p) => sum + p.precio, 0)
+  };
+
+  emailjs.send('service_sby0arr', 'template_zwt9vzb', templateParams)
+    .then(() => alert("Correo de orden enviado!"))
+    .catch(err => alert("Error enviando correo: " + err));
+
+  carrito = [];
+  guardarCarrito();
+  mostrarCarrito();
+});
+
+// ---------------------------
+// Botón de pago ejemplo
+// ---------------------------
+document.getElementById('btnPagar').addEventListener('click', () => {
+  alert("Aquí se integraría la pasarela de pago (ejemplo).");
+});
 
