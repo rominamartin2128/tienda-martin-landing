@@ -6,41 +6,53 @@
   font-family: Arial, sans-serif;
 }
 
-/* Layout general */
-body {
-  background-color: #fdfdfd;
-  color: #333;
-  padding: 20px;
-}
-
+/* ---------------- Header ---------------- */
 header {
   text-align: center;
   margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(90deg, #f8b500, #ff7e5f);
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 header h1 {
   margin-bottom: 10px;
+  font-size: 2rem;
 }
 
 #auth input {
-  padding: 5px;
+  padding: 8px;
   margin: 5px 5px 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
 #auth button {
-  padding: 5px 10px;
+  padding: 8px 15px;
   margin-right: 5px;
   cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
-/* Contenedor principal */
+#auth button:hover {
+  background-color: #f1f1f1;
+}
+
+/* ---------------- Layout principal ---------------- */
 main {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-/* Catálogo de productos */
+/* Catálogo */
 #catalogo {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -51,79 +63,39 @@ main {
 /* Cada producto */
 .producto {
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 10px;
   background-color: #fff;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Imagen del producto */
+.producto:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* Imagen */
 .producto img {
-  width: 150px;       /* tamaño uniforme */
-  height: 150px;      /* tamaño uniforme */
-  object-fit: cover;  /* para que no se deforme */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
   margin: 0 auto 10px;
   border-radius: 5px;
 }
 
-/* Nombre y precio */
+/* Texto */
 .producto h3 {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin-bottom: 5px;
 }
 
 .producto p {
   font-weight: bold;
-  margin-bottom: 10px;
-}
+  margin-bot
 
-/* Botones */
-.producto button {
-  padding: 5px 10px;
-  margin-top: auto;
-  cursor: pointer;
-}
-
-/* Detalles */
-details {
-  text-align: left;
-  margin-top: 10px;
-}
-
-details summary {
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* Carrito */
-aside {
-  flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  background-color: #fff;
-  height: fit-content;
-}
-
-#itemsCarrito div {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-#itemsCarrito button {
-  padding: 2px 5px;
-  cursor: pointer;
-}
-
-button#btnFinalizarCompra,
-button#btnPagar {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  cursor: pointer;
 
 
