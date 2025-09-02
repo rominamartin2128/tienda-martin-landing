@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Catálogo - Tienda Martin</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
 <body>
-  <h1>Catálogo de Productos</h1>
-  <div id="productos" class="grid-productos"></div>
+  <!-- Header unificado -->
+  <header>
+    <nav class="navbar">
+      <!-- Logo -->
+      <h1 class="logo">✨ Tienda Martin</h1>
+
+      <!-- Menú -->
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="catalogo.html">Catálogo</a></li>
+        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
+
+      <!-- Login -->
+      <div id="loginSection">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button id="btnLogin">Login</button>
+        <button id="btnRegister">Registrarse</button>
+        <button id="btnLogout" style="display:none;">Logout</button>
+        <span id="userDisplay"></span>
+      </div>
+
+      <!-- Carrito -->
+      <div class="carrito">
+        <a href="#carrito" class="btn-carrito">🛒 <span id="cart-count">0</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main>
+    <h2>Catálogo</h2>
+    <div id="catalogo"></div>
+
+    <h2>Carrito</h2>
+    <div id="itemsCarrito"></div>
+    <p>Total: $<span id="totalCarrito">0</span></p>
+    <button id="btnFinalizarCompra">Finalizar compra</button>
+    <button id="btnPagar" style="display:none;">Pagar con Mercado Pago</button>
+  </main>
 
   <script src="script.js"></script>
 </body>
-</html>
