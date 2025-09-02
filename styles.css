@@ -94,5 +94,59 @@ button, .btn {
 button:hover, .btn:hover {
   background: #8d4a76;
 }
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: #a75d8e;
+  margin: 0;
+}
+
+/* Menú */
+.menu {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu li {
+  display: inline-block;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.menu a:hover {
+  color: #a75d8e;
+}
+
+/* Carrito */
+.carrito .btn-carrito {
+  text-decoration: none;
+  background: #a75d8e;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.carrito .btn-carrito:hover {
+  background: #8d4a76;
+}
+
 
 
