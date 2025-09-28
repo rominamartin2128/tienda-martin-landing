@@ -27,17 +27,11 @@ loginBtn.addEventListener("click", () => {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      console.log("Login exitoso");
-    })
-    .catch(err => {
-      alert("Error de login: " + err.message);
-    });
+    .then(() => console.log("Login exitoso"))
+    .catch(err => alert("Error de login: " + err.message));
 });
 
-logoutBtn.addEventListener("click", () => {
-  signOut(auth);
-});
+logoutBtn.addEventListener("click", () => signOut(auth));
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -60,10 +54,43 @@ carritoBtn.addEventListener("click", () => {
   alert("Tu carrito tiene " + carrito.length + " productos.");
 });
 
-// ------------------ MENÚ HAMBURGUESA ------------------
+// ------------------ CARGAR PRODUCTOS ------------------
 document.addEventListener("DOMContentLoaded", () => {
+  const catalogo = document.getElementById("catalogo");
+
+  fetch("productos.json")
+    .then(response => response.json())
+    .then(productos => {
+      productos.forEach(producto => {
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.innerHTML = `
+          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <h3>${producto.nombre}</h3>
+          <p>${producto.descripcion}</p>
+          <button>Agregar al carrito</button>
+        `;
+        catalogo.appendChild(div);
+
+        // Agregar funcionalidad del botón al carrito
+        div.querySelector("button").addEventListener("click", () => {
+          carrito.push(producto);
+          carritoCount.textContent = carrito.length;
+          alert(`${producto.nombre} agregado al carrito`);
+        });
+      });
+    })
+    .catch(error => console.error("Error al cargar productos:", error));
+
+  // ------------------ MENÚ HAMBURGUESA ------------------
   const toggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".navbar nav ul");
+
+  toggle.addEventListener("click", () => {
+    navMenu.classList.toggle("open");
+  });
+});
+
 
   if (toggle && navMenu) {
     toggle.addEventListener("click", () => {
@@ -71,6 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
 
 
 
