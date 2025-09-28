@@ -1,68 +1,60 @@
-<header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Cosmética</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
   <header>
-  <div class="navbar">
-    <h1>Tienda Cosmética</h1>
+    <div class="navbar">
+      <h1>Tienda Cosmética</h1>
 
-    <!-- Botón hamburguesa (visible solo en mobile con CSS) -->
-    <div class="menu-toggle">☰</div>
+      <!-- Botón hamburguesa -->
+      <div class="menu-toggle">☰</div>
 
-    <!-- Menú de navegación -->
-    <nav>
-      <ul>
-        <li><a href="#catalogo">Catálogo</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
+      <!-- Navegación -->
+      <nav>
+        <ul>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
 
-    <!-- Carrito -->
-    <div class="carrito">
-      <button id="carritoBtn">🛒</button>
-      <span id="carritoCount">0</span>
+      <!-- Carrito -->
+      <div class="carrito">
+        <button id="carritoBtn">🛒</button>
+        <span id="carritoCount">0</span>
+      </div>
+
+      <!-- Login -->
+      <div id="loginSection">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn" style="display:none;">Logout</button>
+        <span id="userDisplay"></span>
+      </div>
     </div>
+  </header>
 
-    <!-- Login -->
-    <div id="loginSection">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Contraseña">
-      <button id="loginBtn">Login</button>
-      <button id="logoutBtn" style="display:none;">Logout</button>
-      <span id="userDisplay"></span>
-    </div>
-  </div>
-</header>
+  <!-- CATÁLOGO -->
+  <main>
+    <section id="catalogo" class="catalogo">
+      <!-- acá van tus productos cargados dinámicamente -->
+    </section>
+  </main>
 
-  <nav class="navbar">
-    <!-- Logo -->
-    <h1 class="logo">✨ Tienda Martin</h1>
+  <!-- FOOTER -->
+  <footer id="contacto">
+    <p>&copy; 2025 Tienda Cosmética - Todos los derechos reservados</p>
+  </footer>
 
-    <!-- Menú -->
-    <ul class="menu">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="catalogo.html">Catálogo</a></li>
-      <li><a href="#about">Nosotros</a></li>
-      <li><a href="#contact">Contacto</a></li>
-    </ul>
-
-    <!-- Login -->
-    <div id="loginSection">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Contraseña">
-      <button id="btnLogin">Login</button>
-      <button id="btnRegister">Registrarse</button>
-      <button id="btnLogout" style="display:none;">Logout</button>
-      <span id="userDisplay"></span>
-    </div>
-
-    <!-- Carrito -->
-    <div class="carrito">
-      <a href="#carrito" class="btn-carrito">🛒 <span id="cart-count">0</span></a>
-    </div>
-  </nav>
-</header>
-
-
-
-
-
+  <script src="script.js"></script>
+</body>
+</html>
 
 
