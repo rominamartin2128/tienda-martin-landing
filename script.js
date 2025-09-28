@@ -76,5 +76,17 @@ function mostrarCarrito() {
   });
   document.getElementById('totalCarrito').textContent = total;
 }
+// --- MENÚ HAMBURGUESA ---
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".menu-toggle");
+  const navMenu = document.querySelector(".navbar nav ul");
+
+  if (toggle && navMenu) {
+    toggle.addEventListener("click", () => {
+      navMenu.classList.toggle("open");
+    });
+  }
+});
+
 
 
