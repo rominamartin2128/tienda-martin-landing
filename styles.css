@@ -1,12 +1,44 @@
-/* Ajustes generales del header */
+/* --- HEADER (navbar) --- */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  padding: 1rem 2rem;
+  background: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* --- LOGIN --- */
+.navbar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* navegación */
+.navbar nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar nav ul li a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+  color: #e07a5f;
+}
+
+/* --- LOGIN (lo tuyo se mantiene) --- */
 #loginSection {
   display: flex;
   align-items: center;
@@ -41,11 +73,108 @@
   color: #333;
 }
 
-/* Carrito y login juntos alineados a la derecha */
+/* carrito y login juntos */
 .navbar > .carrito,
 .navbar > #loginSection {
   display: inline-flex;
   align-items: center;
+}
+
+/* --- CATÁLOGO --- */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.producto {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+}
+
+.producto img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover; /* asegura proporción */
+  border-bottom: 1px solid #eee;
+}
+
+.producto h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0.8rem 0 0.4rem;
+}
+
+.producto p {
+  font-size: 0.9rem;
+  color: #666;
+  padding: 0 1rem;
+}
+
+.producto button {
+  margin: 1rem 0;
+  padding: 0.6rem 1.2rem;
+  background: #e07a5f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.producto button:hover {
+  background: #cf5f43;
+}
+/* --- MEDIA QUERY MOBILE --- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* ocultamos el menú normal */
+  .navbar nav ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    background: #f8f8f8;
+    border-top: 1px solid #ddd;
+    padding: 1rem 0;
+  }
+
+  /* botón hamburguesa */
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  /* cuando se active la clase "open" */
+  .navbar nav ul.open {
+    display: flex;
+  }
+
+  /* catálogo más compacto */
+  .catalogo {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .producto img {
+    height: 200px;
+  }
 }
 
 
