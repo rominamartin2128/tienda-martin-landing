@@ -107,13 +107,25 @@
   text-align: center;
 }
 
-.producto ul {
+.descripcion {
   font-size: 14px;
   list-style: disc inside;
-  text-align: left;
-  margin: 5px 0;
+  margin: 5px 0 10px 0;
   padding: 0;
-  flex-grow: 1;
+  display: none;
+}
+
+.toggle-desc {
+  background: none;
+  border: none;
+  color: #a75d8e;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.toggle-desc:hover {
+  text-decoration: underline;
 }
 
 .producto .precio {
@@ -123,7 +135,7 @@
   font-size: 16px;
 }
 
-.producto button {
+.producto button:last-of-type {
   background-color: #a75d8e;
   color: #fff;
   border: none;
@@ -134,7 +146,7 @@
   transition: background 0.3s;
 }
 
-.producto button:hover {
+.producto button:last-of-type:hover {
   background-color: #8d4a76;
 }
 
