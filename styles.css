@@ -131,6 +131,90 @@ button:hover {
     grid-template-columns: 1fr; /* celulares: 1 columna */
   }
 }
+/* ======= FIX RÁPIDO: forzar imágenes más chicas y grid en columnas ======= */
+/* Aplica a muchos nombres de contenedores posibles para mayor cobertura */
+#catalogo,
+#catalogue,
+#catalog,
+.catalogo,
+.catalog,
+.productos-container,
+.products,
+.product-list,
+.product-grid,
+.catalogo-grid,
+.cards,
+.products-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+  gap: 20px !important;
+  align-items: start !important;
+}
+
+/* Limita el ancho de cada tarjeta para que no estiren todo el ancho */
+#catalogo > .producto,
+.catalogo > .producto,
+.productos-container > .product-card,
+.products > .product-card,
+.card,
+.product-card,
+.product {
+  max-width: 260px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+/* Forzar tamaño reducido de todas las imágenes de producto posibles */
+#catalogo img,
+.catalogo img,
+.productos-container img,
+.products img,
+.product-card img,
+.product img,
+.card img,
+img.producto,
+img.product {
+  max-width: 160px !important;
+  width: auto !important;
+  height: auto !important;
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  object-fit: contain !important;
+}
+
+/* Si el HTML trae atributos width/height inline */
+img[width],
+img[height] {
+  width: auto !important;
+  height: auto !important;
+  max-width: 160px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #catalogo,
+  .productos-container,
+  .products,
+  .catalogo {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+@media (max-width: 480px) {
+  #catalogo,
+  .productos-container,
+  .products,
+  .catalogo {
+    grid-template-columns: 1fr !important;
+  }
+
+  #catalogo img,
+  .product-card img,
+  .productos-container img {
+    max-width: 140px !important;
+  }
+}
+
 
 
 
