@@ -52,7 +52,7 @@ const carritoCount = document.getElementById("cart-count");
 document.addEventListener("DOMContentLoaded", () => {
   const catalogo = document.getElementById("catalogo");
 
-  // ------------------ CARGAR PRODUCTOS DESDE JSON EN GITHUB PAGES ------------------
+  // ------------------ CARGAR PRODUCTOS DESDE JSON ------------------
   fetch("https://rominamartin2128.github.io/tienda-martin-landing/productos.json")
     .then(res => res.json())
     .then(productos => {
