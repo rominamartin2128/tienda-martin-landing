@@ -1,6 +1,6 @@
 const contenedor = document.getElementById("productosContainer");
 
-// Función para cargar productos y renderizar
+// Cargar productos y renderizarlos
 function cargarProductos() {
   fetch("productos.json")
     .then(res => res.json())
@@ -9,12 +9,17 @@ function cargarProductos() {
         const card = document.createElement("div");
         card.classList.add("producto");
 
+        // Unir la descripción (que es array) en un string
+        const descripcionTexto = Array.isArray(producto.descripcion)
+          ? producto.descripcion.join(" • ")
+          : producto.descripcion;
+
         card.innerHTML = `
           <img src="${producto.imagen}" alt="${producto.nombre}">
           <h3>${producto.nombre}</h3>
           <p class="precio">$${producto.precio}</p>
           <button class="toggle-desc">Ver más</button>
-          <p class="descripcion oculto">${producto.descripcion}</p>
+          <p class="descripcion oculto">${descripcionTexto}</p>
           <button class="agregar-carrito">Agregar al carrito</button>
         `;
 
@@ -31,10 +36,9 @@ function cargarProductos() {
           }
         });
 
-        // Botón para agregar al carrito (si ya tenés esa funcionalidad)
+        // Botón para agregar al carrito (mantengo tu lógica previa)
         const btnCarrito = card.querySelector(".agregar-carrito");
         btnCarrito.addEventListener("click", () => {
-          // Llama a tu función de carrito si la tienes
           agregarAlCarrito(producto);
         });
 
@@ -44,11 +48,7 @@ function cargarProductos() {
     .catch(error => console.error("Error cargando productos:", error));
 }
 
-// Llamar la función para que se carguen los productos al inicio
+// Ejecutar al inicio
 cargarProductos();
-
-      contenedor.appendChild(card);
-    });
-  });
 
 
