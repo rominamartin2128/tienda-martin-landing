@@ -40,189 +40,14 @@ h2 {
 }
 
 /* ==========================
-   PRODUCTOS / CATÁLOGO
-========================== */
-.productos-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 25px;
-  justify-content: center;
-}
-
-.product-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 15px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-}
-
-.product-card:hover {
-  transform: translateY(-5px);
-}
-
-.product-card img {
-  width: 100%;
-  max-width: 180px; /* hace que no sean gigantes */
-  height: auto;
-  margin: 0 auto 10px;
-  display: block;
-  object-fit: contain;
-  border-radius: 6px;
-}
-
-.product-card h3 {
-  font-size: 1rem;
-  margin: 10px 0;
-  color: #333;
-}
-
-.product-card p {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 10px;
-}
-
-button {
-  background: #007bff;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 0.9rem;
-  transition: background 0.2s ease;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-/* Descripciones desplegables */
-.descripcion {
-  margin: 10px 0;
-}
-
-.descripcion button {
-  background: #28a745;
-  padding: 6px 10px;
-  font-size: 14px;
-}
-
-.desc-text {
-  margin-top: 8px;
-  text-align: left;
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
-@media (max-width: 768px) {
-  .productos-container {
-    grid-template-columns: repeat(2, 1fr); /* tablets: 2 columnas */
-  }
-}
-
-@media (max-width: 480px) {
-  .productos-container {
-    grid-template-columns: 1fr; /* celulares: 1 columna */
-  }
-}
-/* ======= FIX RÁPIDO: forzar imágenes más chicas y grid en columnas ======= */
-/* Aplica a muchos nombres de contenedores posibles para mayor cobertura */
-#catalogo,
-#catalogue,
-#catalog,
-.catalogo,
-.catalog,
-.productos-container,
-.products,
-.product-list,
-.product-grid,
-.catalogo-grid,
-.cards,
-.products-grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-  gap: 20px !important;
-  align-items: start !important;
-}
-
-/* Limita el ancho de cada tarjeta para que no estiren todo el ancho */
-#catalogo > .producto,
-.catalogo > .producto,
-.productos-container > .product-card,
-.products > .product-card,
-.card,
-.product-card,
-.product {
-  max-width: 260px !important;
-  margin: 0 auto !important;
-  box-sizing: border-box !important;
-}
-
-/* Forzar tamaño reducido de todas las imágenes de producto posibles */
-#catalogo img,
-.catalogo img,
-.productos-container img,
-.products img,
-.product-card img,
-.product img,
-.card img,
-img.producto,
-img.product {
-  max-width: 160px !important;
-  width: auto !important;
-  height: auto !important;
-  display: block !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  object-fit: contain !important;
-}
-
-/* Si el HTML trae atributos width/height inline */
-img[width],
-img[height] {
-  width: auto !important;
-  height: auto !important;
-  max-width: 160px !important;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  #catalogo,
-  .productos-container,
-  .products,
-  .catalogo {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (max-width: 480px) {
-  #catalogo,
-  .productos-container,
-  .products,
-  .catalogo {
-    grid-template-columns: 1fr !important;
-  }
-
-  #catalogo img,
-  .product-card img,
-  .productos-container img {
-    max-width: 140px !important;
-  }
-}
-/* ==========================
    CATALOGO DE PRODUCTOS
 ========================== */
 #catalogo {
-  padding: 40px 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 25px;
   justify-content: center;
+  padding: 20px 0;
 }
 
 .producto {
@@ -241,10 +66,10 @@ img[height] {
 
 .producto img {
   width: 100%;
-  max-width: 180px;
+  max-width: 160px;
   height: auto;
-  margin: 0 auto 10px;
   display: block;
+  margin: 0 auto 10px;
   object-fit: contain;
 }
 
@@ -273,6 +98,49 @@ img[height] {
 
 .producto button:hover {
   background: #0056b3;
+}
+
+/* Descripciones desplegables */
+.descripcion {
+  margin: 10px 0;
+}
+
+.descripcion button {
+  background: #28a745;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.descripcion button:hover {
+  background: #218838;
+}
+
+.desc-text {
+  margin-top: 8px;
+  text-align: left;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+  #catalogo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  #catalogo {
+    grid-template-columns: 1fr;
+  }
+
+  .producto img {
+    max-width: 140px;
+  }
 }
 
 
