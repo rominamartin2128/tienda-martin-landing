@@ -91,6 +91,13 @@
 }
 
 .producto:hover {
-  transform: tr
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
 
+.producto img {
+  width: 60%;
+  height: 140px;
+  object-fit: contain;
+  marg
 
