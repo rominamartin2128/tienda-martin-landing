@@ -138,5 +138,74 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cargarProductos();
 });
+// --- CARRITO ---
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function actualizarCarritoUI() {
+  const carritoLista = document.getElementById("carritoLista");
+  const carritoTotal = document.getElementById("carritoTotal");
+  const cartCount = document.getElementById("cart-count");
+
+  carritoLista.innerHTML = "";
+  let total = 0;
+
+  carrito.forEach((p, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${p.nombre} - $${p.precio}
+      <button class="eliminar" data-index="${index}">❌</button>
+    `;
+    carritoLista.appendChild(li);
+    total += Number(p.precio) || 0;
+  });
+
+  carritoTotal.textContent = `Total: $${total}`;
+  cartCount.textContent = carrito.length;
+
+  // Vaciar carrito
+  if (!document.getElementById("vaciarCarrito")) {
+    const btnVaciar = document.createElement("button");
+    btnVaciar.id = "vaciarCarrito";
+    btnVaciar.textContent = "Vaciar carrito";
+    btnVaciar.style.marginTop = "10px";
+    carritoLista.parentElement.appendChild(btnVaciar);
+
+    btnVaciar.addEventListener("click", () => {
+      carrito = [];
+      guardarCarrito();
+      actualizarCarritoUI();
+    });
+  }
+
+  // Eliminar productos individuales
+  document.querySelectorAll(".eliminar").forEach(btn => {
+    btn.addEventListener("click", e => {
+      const index = e.target.dataset.index;
+      carrito.splice(index, 1);
+      guardarCarrito();
+      actualizarCarritoUI();
+    });
+  });
+
+  guardarCarrito();
+}
+
+// --- Agregar productos existentes al carrito ---
+document.querySelectorAll(".agregar-carrito").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const card = e.target.closest(".producto");
+    const nombre = card.querySelector("h3").textContent;
+    const precio = Number(card.querySelector(".precio").textContent.replace("$","")) || 0;
+    carrito.push({ nombre, precio });
+    actualizarCarritoUI();
+  });
+});
+
+// Inicializamos UI del carrito al cargar
+actualizarCarritoUI();
 
 
