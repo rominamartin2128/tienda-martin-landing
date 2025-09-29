@@ -5,36 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda Martin</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    (function(){emailjs.init("LnLdxuoHCqcG4Fdoj");})();
-  </script>
 </head>
 <body>
   <!-- Header -->
   <header>
     <nav class="navbar">
       <h1 class="logo">✨ Tienda Martin</h1>
-
       <ul class="menu">
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#about">Nosotros</a></li>
         <li><a href="#contact">Contacto</a></li>
       </ul>
-
-      <div id="loginSection">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Contraseña">
-        <button id="btnLogin">Login</button>
-        <button id="btnRegister">Registrarse</button>
-        <button id="btnLogout" style="display:none;">Logout</button>
-        <span id="userDisplay"></span>
-      </div>
-
-      <div class="carrito">
-        🛒 <span id="cart-count">0</span>
-      </div>
-
       <div class="menu-toggle">☰</div>
     </nav>
   </header>
@@ -42,14 +23,17 @@
   <main>
     <h2>Catálogo</h2>
     <div id="catalogo" class="catalogo"></div>
+
+    <h2>Carrito</h2>
+    <div id="itemsCarrito"></div>
+    <p id="totalCarrito">Total: $0</p>
     <button id="btnFinalizarCompra">Finalizar compra</button>
-    <button id="btnPagar" style="display:none;"></button>
   </main>
 
   <section id="about">
     <h2>Nosotros</h2>
     <p>
-      Somos una marca de serums creada por profesionales farmacéuticas
+      Somos una marca creada por profesionales farmacéuticas
       con un profundo conocimiento en química cosmética y fisiología de la piel.
     </p>
   </section>
@@ -62,8 +46,9 @@
     <p><strong>Dirección:</strong> Bv Avellaneda Bis 525, Rosario</p>
   </section>
 
-  <script type="module" src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
 
