@@ -1,134 +1,97 @@
-// ------------------ IMPORTS ------------------
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
-
-// ------------------ FIREBASE LOGIN ------------------
-const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_BUCKET",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-const loginBtn = document.getElementById("btnLogin");
-const logoutBtn = document.getElementById("btnLogout");
-const userDisplay = document.getElementById("userDisplay");
-
-loginBtn.addEventListener("click", () => {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Login exitoso"))
-    .catch(err => alert("Error de login: " + err.message));
-});
-
-logoutBtn.addEventListener("click", () => signOut(auth));
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    userDisplay.textContent = `Hola, ${user.email}`;
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-  } else {
-    userDisplay.textContent = "";
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-  }
-});
-
-// ------------------ EMAILJS ------------------
-emailjs.init("TU_PUBLIC_KEY"); // Public key de EmailJS
-
-// ------------------ CARRITO Y CATÁLOGO ------------------
+// ------------------ CARRITO ------------------
 let carrito = [];
-const catalogo = document.getElementById("catalogo");
-const carritoContainer = document.getElementById("itemsCarrito");
-const totalDiv = document.getElementById("totalCarrito");
-
-// Cargar productos desde JSON
-fetch("./productos.json")
-  .then(res => res.json())
-  .then(productos => {
-    productos.forEach(p => {
-      const div = document.createElement("div");
-      div.classList.add("producto");
-      div.innerHTML = `
-        <img src="${p.imagen}" alt="${p.nombre}">
-        <h3>${p.nombre}</h3>
-        <ul>${p.descripcion.map(d => `<li>${d}</li>`).join("")}</ul>
-        <p class="precio">$${p.precio.toLocaleString()}</p>
-        <button>Agregar al carrito</button>
-      `;
-
-      // Descripción plegable
-      const ul = div.querySelector("ul");
-      ul.style.display = "none";
-      div.querySelector("h3").addEventListener("click", () => {
-        ul.style.display = ul.style.display === "none" ? "block" : "none";
-      });
-
-      // Botón agregar al carrito
-      div.querySelector("button").addEventListener("click", () => {
-        carrito.push(p);
-        actualizarCarrito();
-      });
-
-      catalogo.appendChild(div);
-    });
-  })
-  .catch(err => console.error("Error cargando productos:", err));
 
 function actualizarCarrito() {
-  carritoContainer.innerHTML = "";
-  carrito.forEach((p, index) => {
+  const itemsCarrito = document.getElementById("itemsCarrito");
+  const totalCarrito = document.getElementById("totalCarrito");
+  const cartCount = document.getElementById("cart-count");
+
+  itemsCarrito.innerHTML = "";
+  let total = 0;
+
+  carrito.forEach((producto, index) => {
     const div = document.createElement("div");
-    div.classList.add("carrito-item");
+    div.classList.add("item-carrito");
+
     div.innerHTML = `
-      <span>${p.nombre} - $${p.precio.toLocaleString()}</span>
-      <button data-index="${index}">Eliminar</button>
+      <p>${producto.nombre} - $${producto.precio.toLocaleString()}</p>
+      <button class="btnEliminar" data-index="${index}">❌</button>
     `;
-    div.querySelector("button").addEventListener("click", () => {
+
+    itemsCarrito.appendChild(div);
+    total += producto.precio;
+  });
+
+  totalCarrito.textContent = total.toLocaleString();
+  cartCount.textContent = carrito.length;
+
+  // Botón eliminar
+  document.querySelectorAll(".btnEliminar").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const index = e.target.dataset.index;
       carrito.splice(index, 1);
       actualizarCarrito();
     });
-    carritoContainer.appendChild(div);
   });
-  totalDiv.textContent = "Total: $" + carrito.reduce((sum, p) => sum + p.precio, 0).toLocaleString();
 }
 
-// ------------------ FINALIZAR COMPRA ------------------
+// ------------------ CATALOGO ------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const catalogo = document.getElementById("catalogo");
+
+  fetch("productos.json")
+    .then(res => res.json())
+    .then(productos => {
+      productos.forEach(producto => {
+        const div = document.createElement("div");
+        div.classList.add("producto");
+
+        div.innerHTML = `
+          <img src="${producto.imagen}" alt="${producto.nombre}">
+          <h3>${producto.nombre}</h3>
+          <p class="precio">$${producto.precio.toLocaleString()}</p>
+          <button class="btnAgregar">Agregar al carrito</button>
+        `;
+
+        const btn = div.querySelector(".btnAgregar");
+        btn.addEventListener("click", () => {
+          carrito.push(producto);
+          actualizarCarrito();
+          alert(`${producto.nombre} agregado al carrito`);
+        });
+
+        catalogo.appendChild(div);
+      });
+    })
+    .catch(err => console.error("Error cargando productos:", err));
+});
+
+// ------------------ EMAILJS ORDEN DE COMPRA ------------------
 document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
   if (carrito.length === 0) {
     alert("El carrito está vacío");
     return;
   }
 
-  const lista = carrito.map(p => `${p.nombre} - $${p.precio.toLocaleString()}`).join("\n");
-  const total = carrito.reduce((sum, p) => sum + p.precio, 0);
+  let lista = carrito.map(p => `- ${p.nombre} ($${p.precio})`).join("\n");
+  let total = carrito.reduce((acc, p) => acc + p.precio, 0);
 
-  // Enviar correo con EmailJS
   const templateParams = {
-    usuario: userDisplay.textContent || "Invitado",
+    usuario: document.getElementById("userDisplay").textContent || "Invitado",
     pedido: lista,
     total: `$${total.toLocaleString()}`
   };
 
-  emailjs.send("service_sby0arr", "template_onftb26", templateParams)
-    .then(() => alert("Orden enviada por correo!"))
-    .catch(err => alert("Error enviando correo: " + err));
+  emailjs.send("service_5ro55v9", "template_k4zk30a", templateParams, "bIjrBOVKEdjncZDpG")
+    .then(() => {
+      alert("✅ Orden enviada por correo!");
+      carrito = [];
+      actualizarCarrito();
+    })
+    .catch(err => {
+      console.error("Error enviando correo:", err);
+      alert("❌ Error al enviar la orden");
+    });
 });
 
-// ------------------ MENU HAMBURGUESA ------------------
-const toggle = document.querySelector(".menu-toggle");
-const navMenu = document.querySelector(".navbar ul");
-
-toggle.addEventListener("click", () => {
-  navMenu.classList.toggle("open");
-});
 
