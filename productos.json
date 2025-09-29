@@ -1,6 +1,5 @@
 [
   {
-    "id": 1,
     "nombre": "Serum Iluminación",
     "descripcion": [
       "Disminuye el tamaño de los poros para una textura más suave y refinada.",
@@ -13,7 +12,6 @@
     "imagen": "img/serum-iluminacion.jpg"
   },
   {
-    "id": 2,
     "nombre": "Serum Humectación y Firmeza",
     "descripcion": [
       "Hidratación profunda y equilibrada.",
@@ -26,7 +24,6 @@
     "imagen": "img/serum-humectacion-firmeza.jpg"
   },
   {
-    "id": 3,
     "nombre": "Serum Antioxidante Plus",
     "descripcion": [
       "Prevención del envejecimiento.",
@@ -39,7 +36,6 @@
     "imagen": "img/serum-antioxidante-plus.jpg"
   },
   {
-    "id": 4,
     "nombre": "Serum Reafirmante Antipolución",
     "descripcion": [
       "Efecto lifting instantáneo.",
@@ -52,7 +48,6 @@
     "imagen": "img/serum-reafirmante-antipolucion.jpg"
   },
   {
-    "id": 5,
     "nombre": "Serum Descongestivo",
     "descripcion": [
       "Efecto calmante inmediato.",
@@ -65,7 +60,6 @@
     "imagen": "img/serum-descongestivo.jpg"
   },
   {
-    "id": 6,
     "nombre": "Serum Vitamina C",
     "descripcion": [
       "Antioxidante potente.",
@@ -78,7 +72,6 @@
     "imagen": "img/serum-vitaminac.jpg"
   },
   {
-    "id": 7,
     "nombre": "Serum Probio Piel Sensible",
     "descripcion": [
       "Alivio inmediato.",
@@ -91,12 +84,3 @@
     "imagen": "img/serum-probio-piel-sensible.jpg"
   }
 ]
-
-
-
-
-
-
-
-
-
