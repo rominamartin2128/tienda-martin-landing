@@ -4,7 +4,7 @@ const carritoContainer = document.getElementById("itemsCarrito");
 const totalDiv = document.getElementById("totalCarrito");
 
 // Cargar productos desde JSON
-fetch("productos.json")
+fetch("productos.json")  // <-- ruta relativa a tu HTML
   .then(res => res.json())
   .then(productos => {
     productos.forEach(p => {
@@ -17,6 +17,7 @@ fetch("productos.json")
         <p class="precio">$${p.precio.toLocaleString()}</p>
         <button>Agregar al carrito</button>
       `;
+
       // Descripción plegable
       const ul = div.querySelector("ul");
       ul.style.display = "none";
@@ -32,7 +33,8 @@ fetch("productos.json")
 
       catalogo.appendChild(div);
     });
-  });
+  })
+  .catch(err => console.error("Error cargando productos:", err));
 
 function actualizarCarrito() {
   carritoContainer.innerHTML = "";
@@ -52,7 +54,7 @@ function actualizarCarrito() {
   totalDiv.textContent = "Total: $" + carrito.reduce((sum, p) => sum + p.precio, 0).toLocaleString();
 }
 
-// Botón finalizar compra (por ahora solo alerta)
+// Botón finalizar compra (solo alerta por ahora)
 document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
   if (carrito.length === 0) {
     alert("El carrito está vacío");
@@ -62,4 +64,5 @@ document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
   const total = carrito.reduce((sum, p) => sum + p.precio, 0);
   alert(`Orden:\n${lista}\n\nTotal: $${total.toLocaleString()}\n\nAquí se podría integrar EmailJS o Mercado Pago.`);
 });
+
 
