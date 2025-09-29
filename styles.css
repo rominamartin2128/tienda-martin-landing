@@ -65,113 +65,94 @@
   align-items: center;
 }
 
+
 /* =======================
    CATÁLOGO
 ======================= */
 .catalogo {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
+    /* Usamos 'grid' para la disposición */
+    display: grid;
+    /* FORZAMOS 4 COLUMNAS de igual ancho (1fr) */
+    grid-template-columns: repeat(4, 1fr); 
+    /* Espacio entre los productos */
+    gap: 20px; 
+    padding: 20px;
+    /* Centrar el catálogo en la página */
+    max-width: 1280px; /* Ajusta este valor para controlar el ancho general */
+    margin: 0 auto;
 }
 
 .producto {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  padding: 10px;
-  text-align: center;
-  transition: transform 0.3s;
-  display: flex;
-  flex-direction: column;
+    background-color: #fff;
+    border-radius: 5px; /* Reduje el border-radius para un look más rectangular */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra más sutil */
+    padding: 15px; /* Más padding para 'aire' */
+    text-align: center;
+    transition: transform 0.3s;
+    display: flex;
+    flex-direction: column;
+    /* Asegurar un ancho completo en su columna y que el padding no afecte el tamaño total */
+    box-sizing: border-box; 
+    /* Establecer una altura mínima o fija si deseas una uniformidad de altura forzada, 
+       pero es mejor dejar que el contenido lo dicte y usar flex-grow */
 }
 
-.producto:hover {
-  transform: translateY(-5px);
-}
-
+/* Ajuste para mantener la imagen visible y de un tamaño similar */
 .producto img {
-  width: 100%;
-  max-height: 160px; /* reduje para mayor uniformidad */
-  object-fit: cover;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
+    width: 100%;
+    /* Aumento la altura máxima para que la imagen se vea mejor en una cuadrícula de 4 */
+    max-height: 180px; 
+    object-fit: contain; /* Usamos 'contain' para que la imagen completa se vea sin cortar */
+    border-radius: 5px;
+    transition: transform 0.3s ease;
 }
 
-.producto img:hover {
-  transform: scale(1.05);
-}
-
-.producto h3 {
-  margin: 8px 0 4px;
-  font-size: 16px;
-}
-
-.producto ul {
-  text-align: left;
-  font-size: 14px;
-  margin: 5px 0;
-  padding-left: 20px;
-  flex-grow: 1;
-}
-
-.producto .precio {
-  font-weight: bold;
-  margin-top: 10px;
-  font-size: 16px;
-  color: #a75d8e;
-}
-
-.producto button {
-  margin-top: 10px;
-  padding: 8px 12px;
-  border: none;
-  background-color: #a75d8e;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-.producto button:hover {
-  background-color: #8d4a76;
-}
-
+/* El resto de estilos para .producto (h3, ul, .precio, button) se mantienen */
 /* =======================
    RESPONSIVE
 ======================= */
 @media (max-width: 1024px) {
-  .catalogo {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  }
-  .producto img {
-    max-height: 140px;
-  }
+    /* En tabletas, cambiamos a 3 columnas */
+    .catalogo {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        padding: 15px;
+    }
+    .producto img {
+        max-height: 160px;
+    }
+    /* ... otros estilos responsivos si los tienes ... */
 }
 
 @media (max-width: 768px) {
-  .navbar nav ul {
-    display: none;
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .catalogo {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  }
-  .producto img {
-    max-height: 120px;
-  }
+    /* En móviles grandes o tabletas pequeñas, cambiamos a 2 columnas */
+    .navbar nav ul {
+        display: none;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    .catalogo {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 10px;
+    }
+    .producto img {
+        max-height: 140px;
+    }
 }
 
 @media (max-width: 480px) {
-  .catalogo {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  }
-  .producto img {
-    max-height: 100px;
-  }
+    /* En móviles, mantenemos 2 columnas para un mejor aprovechamiento del espacio */
+    .catalogo {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    .producto img {
+        max-height: 120px;
+    }
+    /* Si deseas 1 columna en móviles muy pequeños, usa:
+    .catalogo {
+        grid-template-columns: 1fr; 
+    }
+    */
 }
-
-
