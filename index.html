@@ -5,31 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tienda Martin</title>
   <link rel="stylesheet" href="styles.css">
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("bIjrBOVKEdjncZDpG");
+  </script>
 </head>
 <body>
   <!-- Header -->
   <header>
     <nav class="navbar">
       <h1 class="logo">✨ Tienda Martin</h1>
+
       <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#about">Nosotros</a></li>
         <li><a href="#contact">Contacto</a></li>
       </ul>
+
+      <div id="loginSection">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button id="btnLogin">Login</button>
+        <button id="btnRegister">Registrarse</button>
+        <button id="btnLogout" style="display:none;">Logout</button>
+        <span id="userDisplay"></span>
+      </div>
+
+      <div class="carrito">
+        🛒 <span id="cart-count">0</span>
+      </div>
+
       <div class="menu-toggle">☰</div>
     </nav>
   </header>
 
   <main>
+    <!-- Catálogo -->
     <h2>Catálogo</h2>
     <div id="catalogo" class="catalogo"></div>
 
+    <!-- Carrito -->
     <h2>Carrito</h2>
     <div id="itemsCarrito"></div>
-    <p id="totalCarrito">Total: $0</p>
+    <p>Total: $<span id="totalCarrito">0</span></p>
     <button id="btnFinalizarCompra">Finalizar compra</button>
   </main>
 
+  <!-- Nosotros -->
   <section id="about">
     <h2>Nosotros</h2>
     <p>
@@ -38,6 +63,7 @@
     </p>
   </section>
 
+  <!-- Contacto -->
   <section id="contact">
     <h2>Contacto</h2>
     <p><strong>Horario:</strong> Lunes a Viernes de 9 a 18hs</p>
@@ -46,9 +72,7 @@
     <p><strong>Dirección:</strong> Bv Avellaneda Bis 525, Rosario</p>
   </section>
 
-  <script src="script.js"></script>
+  <!-- Script -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
-
-
-
