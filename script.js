@@ -1,4 +1,4 @@
-const contenedor = document.getElementById("catalogoContainer");
+const contenedor = document.getElementById("productosContainer");
 
 // Tomo los productos del JSON
 fetch("productos.json")
