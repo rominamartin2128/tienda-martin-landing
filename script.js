@@ -4,7 +4,7 @@ const carritoContainer = document.getElementById("itemsCarrito");
 const totalDiv = document.getElementById("totalCarrito");
 
 // Cargar productos desde JSON
-fetch("productos.json")  // <-- ruta relativa a tu HTML
+fetch("productos.json")
   .then(res => res.json())
   .then(productos => {
     productos.forEach(p => {
@@ -64,5 +64,6 @@ document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
   const total = carrito.reduce((sum, p) => sum + p.precio, 0);
   alert(`Orden:\n${lista}\n\nTotal: $${total.toLocaleString()}\n\nAquí se podría integrar EmailJS o Mercado Pago.`);
 });
+
 
 
