@@ -214,6 +214,67 @@ img[height] {
     max-width: 140px !important;
   }
 }
+/* ==========================
+   CATALOGO DE PRODUCTOS
+========================== */
+#catalogo {
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-content: center;
+}
+
+.producto {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  padding: 15px;
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+}
+
+.producto img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  margin: 0 auto 10px;
+  display: block;
+  object-fit: contain;
+}
+
+.producto h3 {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.producto p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.producto button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.producto button:hover {
+  background: #0056b3;
+}
+
 
 
 
