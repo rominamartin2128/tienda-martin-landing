@@ -9,7 +9,7 @@
       "Adecuado para todo tipo de piel, adaptándose a las necesidades específicas de cada rostro."
     ],
     "precio": 36000,
-    "imagen": "img/serum-iluminacion.jpg"
+    "imagen": "./img/serum-iluminacion.jpg"
   },
   {
     "nombre": "Serum Humectación y Firmeza",
@@ -21,7 +21,7 @@
       "Resultados visibles y duraderos."
     ],
     "precio": 36000,
-    "imagen": "img/serum-humectacion-firmeza.jpg"
+    "imagen": "./img/serum-humectacion-firmeza.jpg"
   },
   {
     "nombre": "Serum Antioxidante Plus",
@@ -33,7 +33,7 @@
       "Reparación progresiva."
     ],
     "precio": 38000,
-    "imagen": "img/serum-antioxidante-plus.jpg"
+    "imagen": "./img/serum-antioxidante-plus.jpg"
   },
   {
     "nombre": "Serum Reafirmante Antipolución",
@@ -45,7 +45,7 @@
       "Prevención activa."
     ],
     "precio": 38000,
-    "imagen": "img/serum-reafirmante-antipolucion.jpg"
+    "imagen": "./img/serum-reafirmante-antipolucion.jpg"
   },
   {
     "nombre": "Serum Descongestivo",
@@ -57,7 +57,7 @@
       "Preparación para el maquillaje."
     ],
     "precio": 38000,
-    "imagen": "img/serum-descongestivo.jpg"
+    "imagen": "./img/serum-descongestivo.jpg"
   },
   {
     "nombre": "Serum Vitamina C",
@@ -69,7 +69,7 @@
       "Prevención y corrección."
     ],
     "precio": 40000,
-    "imagen": "img/serum-vitaminac.jpg"
+    "imagen": "./img/serum-vitaminac.jpg"
   },
   {
     "nombre": "Serum Probio Piel Sensible",
@@ -81,6 +81,7 @@
       "Complemento ideal."
     ],
     "precio": 38000,
-    "imagen": "img/serum-probio-piel-sensible.jpg"
+    "imagen": "./img/serum-probio-piel-sensible.jpg"
   }
 ]
+
