@@ -1,78 +1,103 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda Martin</title>
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script>
-    emailjs.init("bIjrBOVKEdjncZDpG");
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Martín</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
     <nav class="navbar">
-      <h1 class="logo">✨ Tienda Martin</h1>
-
-      <ul class="menu">
-        <li><a href="index.html">Inicio</a></li>
+      <h1 class="logo">Tienda Martín</h1>
+      <ul class="nav-links">
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#about">Nosotros</a></li>
-        <li><a href="#contact">Contacto</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li><a href="#login">Login</a></li>
+        <li><a href="#carrito">🛒 Carrito</a></li>
       </ul>
-
-      <div id="loginSection">
-        <input type="email" id="email" placeholder="Email">
-        <input type="password" id="password" placeholder="Contraseña">
-        <button id="btnLogin">Login</button>
-        <button id="btnRegister">Registrarse</button>
-        <button id="btnLogout" style="display:none;">Logout</button>
-        <span id="userDisplay"></span>
-      </div>
-
-      <div class="carrito">
-        🛒 <span id="cart-count">0</span>
-      </div>
-
-      <div class="menu-toggle">☰</div>
     </nav>
   </header>
 
-  <main>
-    <!-- Catálogo -->
+  <!-- CATALOGO -->
+  <section id="catalogo">
     <h2>Catálogo</h2>
-    <div id="catalogo" class="catalogo"></div>
+    <div id="productosContainer" class="productos-container"></div>
+  </section>
 
-    <!-- Carrito -->
-    <h2>Carrito</h2>
-    <div id="itemsCarrito"></div>
-    <p>Total: $<span id="totalCarrito">0</span></p>
-    <button id="btnFinalizarCompra">Finalizar compra</button>
-  </main>
-
-  <!-- Nosotros -->
+  <!-- NOSOTROS -->
   <section id="about">
     <h2>Nosotros</h2>
     <p>
-      Somos una marca creada por profesionales farmacéuticas
-      con un profundo conocimiento en química cosmética y fisiología de la piel.
+      Somos una marca creada por profesionales farmacéuticas con un profundo
+      conocimiento en química cosmética y fisiología de la piel.
     </p>
   </section>
 
-  <!-- Contacto -->
-  <section id="contact">
+  <!-- CONTACTO -->
+  <section id="contacto">
     <h2>Contacto</h2>
-    <p><strong>Horario:</strong> Lunes a Viernes de 9 a 18hs</p>
-    <p><strong>Teléfono:</strong> 3413252936</p>
-    <p><strong>Email:</strong> <a href="mailto:martinromina137@gmail.com">martinromina137@gmail.com</a></p>
-    <p><strong>Dirección:</strong> Bv Avellaneda Bis 525, Rosario</p>
+    <p>Lunes a Viernes de 9 a 18hs</p>
+    <p>📞 3413252936</p>
+    <p>📧 martinromina137@gmail.com</p>
+    <p>📍 Bv Avellaneda Bis 525, Rosario</p>
+
+    <form id="contactForm">
+      <input type="text" name="from_name" placeholder="Tu nombre" required />
+      <input type="email" name="reply_to" placeholder="Tu email" required />
+      <textarea name="message" placeholder="Mensaje" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
   </section>
 
-  <!-- Script -->
+  <!-- LOGIN -->
+  <section id="login">
+    <h2>Login / Registro</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button id="btnLogin">Login</button>
+    <button id="btnRegister">Registrar</button>
+    <button id="btnLogout" style="display:none">Cerrar sesión</button>
+    <p id="userDisplay"></p>
+  </section>
+
+  <!-- CARRITO -->
+  <section id="carrito">
+    <h2>Carrito</h2>
+    <ul id="carritoLista"></ul>
+    <p id="carritoTotal">Total: $0</p>
+  </section>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA1bik0TgeAcBNcCSSIJwVCSSylj8skhOc",
+      authDomain: "tienda-martin.firebaseapp.com",
+      projectId: "tienda-martin",
+      storageBucket: "tienda-martin.firebasestorage.app",
+      messagingSenderId: "813249212381",
+      appId: "1:813249212381:web:92472c9f06c029f7e79034",
+      measurementId: "G-MEEYZ95EG6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    window.firebaseAuth = auth;
+  </script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("bIjrBOVKEdjncZDpG"); // tu PUBLIC KEY
+  </script>
+
+  <!-- Script principal -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
+
