@@ -45,7 +45,7 @@ h2 {
 /* ==========================
    CATALOGO DE PRODUCTOS
 ========================== */
-#catalogoContainer {
+#productosContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
@@ -130,13 +130,13 @@ h2 {
    RESPONSIVE
 ========================== */
 @media (max-width: 768px) {
-  #catalogoContainer {
+  #productosContainer {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  #catalogoContainer {
+  #productosContainer {
     grid-template-columns: 1fr;
   }
 
