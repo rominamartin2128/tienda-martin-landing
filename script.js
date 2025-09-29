@@ -4,7 +4,7 @@ const carritoContainer = document.getElementById("itemsCarrito");
 const totalDiv = document.getElementById("totalCarrito");
 
 // Cargar productos desde JSON
-fetch("productos.json")
+fetch("./productos.json")
   .then(res => res.json())
   .then(productos => {
     productos.forEach(p => {
