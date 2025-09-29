@@ -3,57 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tienda Cosmética</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Tienda Martin</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- Header -->
   <header>
-    <div class="navbar">
-      <h1>Tienda Cosmética</h1>
+    <nav class="navbar">
+      <h1 class="logo">✨ Tienda Martin</h1>
 
-      <!-- Botón hamburguesa -->
-      <div class="menu-toggle">☰</div>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#about">Nosotros</a></li>
+        <li><a href="#contact">Contacto</a></li>
+      </ul>
 
-      <!-- Navegación -->
-      <nav>
-        <ul>
-          <li><a href="#catalogo">Catálogo</a></li>
-          <li><a href="#contacto">Contacto</a></li>
-        </ul>
-      </nav>
-
-      <!-- Carrito -->
-      <div class="carrito">
-        <button id="carritoBtn">🛒</button>
-        <span id="carritoCount">0</span>
-      </div>
-
-      <!-- Login -->
       <div id="loginSection">
         <input type="email" id="email" placeholder="Email">
         <input type="password" id="password" placeholder="Contraseña">
-        <button id="loginBtn">Login</button>
-        <button id="logoutBtn" style="display:none;">Logout</button>
+        <button id="btnLogin">Login</button>
+        <button id="btnRegister">Registrarse</button>
+        <button id="btnLogout" style="display:none;">Logout</button>
         <span id="userDisplay"></span>
       </div>
-    </div>
-  </header>
 
-  <!-- CATÁLOGO -->
-  <main>
-    <section id="catalogo" class="catalogo">
-      <!-- Productos se cargan dinámicamente -->
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer id="contacto">
-    <p>&copy; 2025 Tienda Cosmética - Todos los derechos reservados</p>
-  </footer>
-
-  <script type="module" src="script.js"></script>
-</body>
-</html>
-
+      <div class="carrito">
+        🛒 <span id="cart-count">0</
 
