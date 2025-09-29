@@ -45,7 +45,7 @@ h2 {
 /* ==========================
    CATALOGO DE PRODUCTOS
 ========================== */
-#catalogo {
+#catalogoContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 25px;
@@ -118,8 +118,29 @@ h2 {
 }
 
 .descripcion button:hover {
-  background: #2
+  background: #218838;
+}
 
+.desc-text {
+  margin-top: 8px;
+  text-align: left;
+}
 
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+  #catalogoContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
+@media (max-width: 480px) {
+  #catalogoContainer {
+    grid-template-columns: 1fr;
+  }
 
+  .producto img {
+    max-width: 140px;
+  }
+}
