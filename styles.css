@@ -108,18 +108,7 @@ body {
 }
 
 /* =======================
-   RESPONSIVE
-======================= */
-@media (max-width: 768px) {
-  .navbar ul {
-    display: none;
-  }
-  .menu-toggle {
-    display: block;
-  }
-  .catalogo {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+   RESPONS
+
 
 
