@@ -1,15 +1,9 @@
-/* =======================
-   GENERAL
-======================= */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
-/* =======================
-   HEADER Y NAVBAR
-======================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -40,7 +34,7 @@ body {
 }
 
 /* =======================
-   CATALOGO
+   Catálogo
 ======================= */
 .catalogo {
   display: grid;
@@ -59,7 +53,6 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .producto img {
@@ -83,10 +76,16 @@ body {
   text-align: left;
   margin: 5px 0;
   padding: 0;
+  display: none;
+}
+
+.precio {
+  font-weight: bold;
+  color: #a75d8e;
 }
 
 /* =======================
-   CARRITO
+   Carrito
 ======================= */
 .carrito-item {
   display: flex;
@@ -108,7 +107,21 @@ body {
 }
 
 /* =======================
-   RESPONS
+   Responsive
+======================= */
+@media (max-width: 768px) {
+  .navbar ul {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .catalogo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
 
 
 
