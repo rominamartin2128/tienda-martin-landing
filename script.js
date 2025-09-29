@@ -1,40 +1,38 @@
-// Traemos los productos desde el JSON
+const contenedor = document.getElementById("catalogo");
+
+// Tomo los productos del JSON
 fetch("productos.json")
-  .then(response => response.json())
+  .then(res => res.json())
   .then(productos => {
-    const catalogo = document.getElementById("catalogo");
-
     productos.forEach(producto => {
-      const productoDiv = document.createElement("div");
-      productoDiv.classList.add("producto"); // Clase coherente con CSS
+      const card = document.createElement("div");
+      card.classList.add("producto");
 
-      // Solo generamos HTML, NO ponemos estilos inline
-      productoDiv.innerHTML = `
-        <img src="${producto.img}" alt="${producto.nombre}">
-        <h3>${producto.nombre}</h3>
-        <p>$${producto.precio}</p>
-        <button>Agregar al carrito</button>
-        <div class="descripcion">
-          <button>Ver descripción</button>
-          <div class="desc-text" style="display:none;">
-            ${producto.descripcion.join("<br>")}
-          </div>
-        </div>
-      `;
+      // Imagen
+      const imagen = document.createElement("img");
+      imagen.src = producto.imagen;
+      imagen.alt = producto.nombre;
 
-      catalogo.appendChild(productoDiv);
+      // Nombre
+      const nombre = document.createElement("h3");
+      nombre.textContent = producto.nombre;
+
+      // Descripción
+      const descripcion = document.createElement("p");
+      descripcion.textContent = producto.descripcion;
+
+      // Botón de agregar al carrito
+      const boton = document.createElement("button");
+      boton.textContent = "Agregar al carrito";
+
+      // Append elementos
+      card.appendChild(imagen);
+      card.appendChild(nombre);
+      card.appendChild(descripcion);
+      card.appendChild(boton);
+
+      contenedor.appendChild(card);
     });
-
-    // Funcionalidad desplegable para las descripciones
-    const botonesDesc = document.querySelectorAll(".descripcion button");
-    botonesDesc.forEach(btn => {
-      btn.addEventListener("click", () => {
-        const desc = btn.nextElementSibling;
-        desc.style.display = desc.style.display === "none" ? "block" : "none";
-      });
-    });
-  })
-  .catch(error => console.error("Error cargando productos:", error));
-
+  });
 
 
