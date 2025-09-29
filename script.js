@@ -1,97 +1,127 @@
-// ------------------ CARRITO ------------------
+// ===================== CATALOGO =====================
+async function cargarProductos() {
+  try {
+    const response = await fetch("productos.json");
+    const productos = await response.json();
+
+    const contenedor = document.getElementById("productosContainer");
+    contenedor.innerHTML = "";
+
+    productos.forEach((prod) => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+
+      card.innerHTML = `
+        <img src="${prod.imagen}" alt="${prod.nombre}" />
+        <h3>${prod.nombre}</h3>
+        <p>$${prod.precio}</p>
+        <button onclick="agregarAlCarrito(${prod.id}, '${prod.nombre}', ${prod.precio})">
+          Agregar al carrito
+        </button>
+      `;
+      contenedor.appendChild(card);
+    });
+  } catch (err) {
+    console.error("Error cargando productos:", err);
+  }
+}
+cargarProductos();
+
+// ===================== CARRITO =====================
 let carrito = [];
 
-function actualizarCarrito() {
-  const itemsCarrito = document.getElementById("itemsCarrito");
-  const totalCarrito = document.getElementById("totalCarrito");
-  const cartCount = document.getElementById("cart-count");
-
-  itemsCarrito.innerHTML = "";
-  let total = 0;
-
-  carrito.forEach((producto, index) => {
-    const div = document.createElement("div");
-    div.classList.add("item-carrito");
-
-    div.innerHTML = `
-      <p>${producto.nombre} - $${producto.precio.toLocaleString()}</p>
-      <button class="btnEliminar" data-index="${index}">❌</button>
-    `;
-
-    itemsCarrito.appendChild(div);
-    total += producto.precio;
-  });
-
-  totalCarrito.textContent = total.toLocaleString();
-  cartCount.textContent = carrito.length;
-
-  // Botón eliminar
-  document.querySelectorAll(".btnEliminar").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const index = e.target.dataset.index;
-      carrito.splice(index, 1);
-      actualizarCarrito();
-    });
-  });
+function agregarAlCarrito(id, nombre, precio) {
+  carrito.push({ id, nombre, precio });
+  mostrarCarrito();
 }
 
-// ------------------ CATALOGO ------------------
-document.addEventListener("DOMContentLoaded", () => {
-  const catalogo = document.getElementById("catalogo");
+function mostrarCarrito() {
+  const lista = document.getElementById("carritoLista");
+  const total = document.getElementById("carritoTotal");
+  lista.innerHTML = "";
 
-  fetch("productos.json")
-    .then(res => res.json())
-    .then(productos => {
-      productos.forEach(producto => {
-        const div = document.createElement("div");
-        div.classList.add("producto");
+  let suma = 0;
+  carrito.forEach((item) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nombre} - $${item.precio}`;
+    lista.appendChild(li);
+    suma += item.precio;
+  });
 
-        div.innerHTML = `
-          <img src="${producto.imagen}" alt="${producto.nombre}">
-          <h3>${producto.nombre}</h3>
-          <p class="precio">$${producto.precio.toLocaleString()}</p>
-          <button class="btnAgregar">Agregar al carrito</button>
-        `;
+  total.textContent = `Total: $${suma}`;
+}
 
-        const btn = div.querySelector(".btnAgregar");
-        btn.addEventListener("click", () => {
-          carrito.push(producto);
-          actualizarCarrito();
-          alert(`${producto.nombre} agregado al carrito`);
-        });
+// ===================== EMAILJS =====================
+document.getElementById("contactForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-        catalogo.appendChild(div);
-      });
+  emailjs
+    .sendForm("service_5ro55v9", "template_k4zk30a", this)
+    .then(() => {
+      alert("Correo enviado con éxito ✅");
+      this.reset();
     })
-    .catch(err => console.error("Error cargando productos:", err));
+    .catch((err) => {
+      alert("Error al enviar correo ❌");
+      console.error("EmailJS error:", err);
+    });
 });
 
-// ------------------ EMAILJS ORDEN DE COMPRA ------------------
-document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
-  if (carrito.length === 0) {
-    alert("El carrito está vacío");
-    return;
+// ===================== FIREBASE AUTH =====================
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+const auth = window.firebaseAuth;
+
+const btnLogin = document.getElementById("btnLogin");
+const btnRegister = document.getElementById("btnRegister");
+const btnLogout = document.getElementById("btnLogout");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const userDisplay = document.getElementById("userDisplay");
+
+// Registrar
+btnRegister.addEventListener("click", async () => {
+  try {
+    await createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    alert("Usuario registrado con éxito ✅");
+  } catch (error) {
+    alert("Error en registro: " + error.message);
   }
+});
 
-  let lista = carrito.map(p => `- ${p.nombre} ($${p.precio})`).join("\n");
-  let total = carrito.reduce((acc, p) => acc + p.precio, 0);
+// Login
+btnLogin.addEventListener("click", async () => {
+  try {
+    await signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value);
+    alert("Login exitoso 🎉");
+  } catch (error) {
+    alert("Error en login: " + error.message);
+  }
+});
 
-  const templateParams = {
-    usuario: document.getElementById("userDisplay").textContent || "Invitado",
-    pedido: lista,
-    total: `$${total.toLocaleString()}`
-  };
+// Logout
+btnLogout.addEventListener("click", async () => {
+  await signOut(auth);
+});
 
-  emailjs.send("service_5ro55v9", "template_k4zk30a", templateParams, "bIjrBOVKEdjncZDpG")
-    .then(() => {
-      alert("✅ Orden enviada por correo!");
-      carrito = [];
-      actualizarCarrito();
-    })
-    .catch(err => {
-      console.error("Error enviando correo:", err);
-      alert("❌ Error al enviar la orden");
-    });
+// Detectar sesión
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    userDisplay.textContent = `Hola, ${user.email}`;
+    btnLogout.style.display = "inline-block";
+    btnLogin.style.display = "none";
+    btnRegister.style.display = "none";
+  } else {
+    userDisplay.textContent = "";
+    btnLogout.style.display = "none";
+    btnLogin.style.display = "inline-block";
+    btnRegister.style.display = "inline-block";
+  }
 });
 
 
