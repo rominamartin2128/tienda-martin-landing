@@ -55,6 +55,42 @@ const cartCount=document.getElementById("cart-count");
 const btnFinalizar=document.getElementById("btnFinalizarCompra");
 const btnPagar=document.getElementById("btnPagar");
 
+// Crear contenedor visible del carrito
+let carritoContainer = document.getElementById("itemsCarrito");
+if(!carritoContainer){
+  carritoContainer = document.createElement("div");
+  carritoContainer.id = "itemsCarrito";
+  document.body.insertBefore(carritoContainer, btnFinalizar);
+}
+
+// Función para actualizar la vista del carrito
+function actualizarCarrito(){
+  cartCount.textContent = carrito.length;
+  carritoContainer.innerHTML = "";
+  carrito.forEach((p,index)=>{
+    const div = document.createElement("div");
+    div.classList.add("carrito-item");
+    div.innerHTML = `
+      <span>${p.nombre} - $${p.precio.toLocaleString()}</span>
+      <button data-index="${index}">Eliminar</button>
+    `;
+    const btn = div.querySelector("button");
+    btn.addEventListener("click",()=>{
+      carrito.splice(index,1);
+      actualizarCarrito();
+    });
+    carritoContainer.appendChild(div);
+  });
+  // Mostrar total
+  let totalDiv = document.getElementById("totalCarrito");
+  if(!totalDiv){
+    totalDiv = document.createElement("p");
+    totalDiv.id = "totalCarrito";
+    carritoContainer.appendChild(totalDiv);
+  }
+  totalDiv.textContent = "Total: $" + carrito.reduce((sum,p)=>sum+p.precio,0).toLocaleString();
+}
+
 // Cargar productos desde JSON
 fetch("productos.json")
   .then(res=>res.json())
@@ -76,8 +112,7 @@ fetch("productos.json")
       const btn=div.querySelector("button");
       btn.addEventListener("click",()=>{
         carrito.push(p);
-        cartCount.textContent=carrito.length;
-        alert(`${p.nombre} agregado al carrito`);
+        actualizarCarrito();
       });
       catalogo.appendChild(div);
     });
