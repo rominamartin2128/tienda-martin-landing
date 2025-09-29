@@ -68,7 +68,7 @@ h2 {
 
 .producto img {
   width: 100%;
-  max-width: 160px; /* ancho máximo de las imágenes */
+  max-width: 160px;
   height: auto;
   display: block;
   margin: 0 auto 10px;
@@ -118,38 +118,7 @@ h2 {
 }
 
 .descripcion button:hover {
-  background: #218838;
-}
-
-.desc-text {
-  margin-top: 8px;
-  text-align: left;
-}
-
-/* ==========================
-   FORMULARIOS, CARRO Y OTROS ELEMENTOS
-========================== */
-/* Mantengo todo como estaba en tu CSS original para no romper nada */
-
-/* ==========================
-   RESPONSIVE
-========================== */
-@media (max-width: 768px) {
-  #catalogo {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  #catalogo {
-    grid-template-columns: 1fr;
-  }
-
-  .producto img {
-    max-width: 140px;
-  }
-}
-
+  background: #2
 
 
 
