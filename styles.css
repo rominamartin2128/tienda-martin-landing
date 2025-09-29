@@ -1,3 +1,24 @@
+/* Catálogo en columnas y tamaño de imágenes */
+.catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+
+.producto {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.producto img {
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  border-radius: 6px;
+}
+
 /* Descripción oculta */
 .descripcion.oculto {
   display: none;
@@ -31,6 +52,7 @@
   padding: 8px 12px;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 #vaciarCarrito:hover {
