@@ -1,4 +1,4 @@
-const contenedor = document.getElementById("catalogo");
+const contenedor = document.getElementById("catalogoContainer");
 
 // Tomo los productos del JSON
 fetch("productos.json")
@@ -34,5 +34,4 @@ fetch("productos.json")
       contenedor.appendChild(card);
     });
   });
-
 
