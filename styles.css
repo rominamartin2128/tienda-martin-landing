@@ -1,141 +1,100 @@
-/* =======================
-   GENERAL
-======================= */
+
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  line-height: 1.5;
-  background-color: #fafafa;
-  color: #333;
+  margin: 0;
+  padding: 0;
 }
 
-h1, h2 {
-  text-align: center;
-  color: #a75d8e;
-}
-
-section {
-  padding: 30px 15px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* =======================
-   HEADER Y NAVBAR
-======================= */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 20px;
-  background-color: #fff;
+header {
+  background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  color: #a75d8e;
-  margin: 0;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
 }
 
-.menu {
+.nav-links {
   display: flex;
   gap: 15px;
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
-.menu li a {
+.nav-links li a {
   text-decoration: none;
   color: #333;
-  font-weight: 500;
+  font-weight: bold;
 }
 
-.menu li a:hover {
-  color: #a75d8e;
+section {
+  padding: 40px 20px;
 }
 
-.carrito {
-  font-size: 18px;
-  cursor: pointer;
+h2 {
+  margin-bottom: 20px;
 }
 
-.menu-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 24px;
-}
-
-/* =======================
-   CATÁLOGO
-======================= */
-.catalogo {
+.productos-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
 
-.producto {
-  background: #fff;
-  border-radius: 12px;
+.product-card {
+  border: 1px solid #ddd;
   padding: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-radius: 8px;
   text-align: center;
+}
+
+.product-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+form {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 10px;
+  max-width: 400px;
 }
-
-.producto:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-}
-
-.producto img {
-  max-width: 100%;
-  height: 160px;
-  object-fit: contain;
-  margin-bottom: 10px;
-}
-
-.producto h3 {
-  font-size: 18px;
-  margin: 10px 0;
-}
-
-.precio {
-  font-weight: bold;
-  font-size: 16px;
-  color: #a75d8e;
-  margin: 10px 0;
-}
-
-.producto button {
-  background-color: #a75d8e;
-  border: none;
-  color: #fff;
-  border-radius: 20px;
-  padding: 8px 15px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin-top: 8px;
-}
-
-.producto button:hover {
-  background-color: #8d4a76;
-}
-
-/* Descripción desplegable */
+/* Descripciones desplegables */
 .descripcion {
-  font-size: 14
+  margin: 10px 0;
+}
+
+.descripcion button {
+  background: #28a745;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.desc-text {
+  margin-top: 8px;
+  text-align: left;
+}
+
 
 
 
