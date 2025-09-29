@@ -1,6 +1,7 @@
-// script.js — versión robusta, lista para pegar
+// script.js — versión completa con carrito funcional
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Intento encontrar el contenedor con varios ids posibles
+  // Encontrar contenedor de productos (como antes)
   const posiblesIds = [
     "productosContainer",
     "catalogoContainer",
@@ -8,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "productos-container",
     "catalogo-container"
   ];
-
   let contenedor = null;
   for (const id of posiblesIds) {
     contenedor = document.getElementById(id);
@@ -17,137 +17,136 @@ document.addEventListener("DOMContentLoaded", () => {
       break;
     }
   }
-
   if (!contenedor) {
-    console.error(
-      "[script.js] No se encontró el contenedor de productos. Buscados ids:",
-      posiblesIds.join(", ")
-    );
+    console.error("[script.js] No se encontró contenedor de productos");
     return;
   }
 
-  // Cargar productos.json
-  fetch("productos.json")
-    .then((res) => {
-      if (!res.ok) throw new Error("HTTP " + res.status + " - " + res.statusText);
-      return res.json();
-    })
-    .then((productos) => {
-      // limpiar contenedor por si hay contenido previo
-      contenedor.innerHTML = "";
+  // Carrito como array de objetos
+  let carrito = [];
 
-      if (!Array.isArray(productos) || productos.length === 0) {
-        contenedor.innerHTML = "<p>No hay productos para mostrar.</p>";
-        return;
-      }
+  // Función para actualizar la UI del carrito
+  function actualizarCarritoUI() {
+    const carritoLista = document.getElementById("carritoLista");
+    const carritoTotal = document.getElementById("carritoTotal");
+    const cartCount = document.getElementById("cart-count");
 
-      productos.forEach((producto, index) => {
-        const card = document.createElement("div");
-        card.className = "producto";
+    if (!carritoLista || !carritoTotal || !cartCount) {
+      console.warn("Elementos del carrito no encontrados en el DOM");
+      return;
+    }
 
-        // determinar src de la imagen con soporte a varias claves
-        const srcImg =
-          producto.imagen ||
-          producto.img ||
-          producto.image ||
-          producto.src ||
-          producto.imagenes ||
-          producto.picture ||
-          "";
+    // Vaciar lista
+    carritoLista.innerHTML = "";
+    let total = 0;
 
-        const img = document.createElement("img");
-        img.alt = producto.nombre || producto.title || "Producto";
-        img.loading = "lazy";
-        if (srcImg) {
-          img.src = srcImg;
-        } else {
-          img.src = ""; // dejar en blanco pero visible si hay CSS de fallback
-          console.warn(`[script.js] producto ${index} no tiene imagen:`, producto);
-        }
-
-        const h3 = document.createElement("h3");
-        h3.textContent = producto.nombre || producto.title || "Sin nombre";
-
-        const pPrecio = document.createElement("p");
-        pPrecio.className = "precio";
-        pPrecio.textContent =
-          producto.precio !== undefined && producto.precio !== null
-            ? `$${producto.precio}`
-            : "";
-
-        // botón toggle descripción
-        const btnToggle = document.createElement("button");
-        btnToggle.className = "toggle-desc";
-        btnToggle.type = "button";
-        btnToggle.textContent = "Ver más";
-
-        // descripción: si es array lo uno, si es string lo uso
-        let descripcionTexto = "";
-        if (Array.isArray(producto.descripcion)) {
-          // unir con saltos de línea
-          descripcionTexto = producto.descripcion.join("\n");
-        } else {
-          descripcionTexto = producto.descripcion || "";
-        }
-        const pDesc = document.createElement("p");
-        pDesc.className = "descripcion oculto";
-        // convertimos saltos de línea a <br>
-        pDesc.innerHTML = descripcionTexto
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean)
-          .join("<br>");
-
-        // botón agregar al carrito
-        const btnAgregar = document.createElement("button");
-        btnAgregar.className = "agregar-carrito";
-        btnAgregar.type = "button";
-        btnAgregar.textContent = "Agregar al carrito";
-
-        // montar card
-        card.appendChild(img);
-        card.appendChild(h3);
-        card.appendChild(pPrecio);
-        card.appendChild(btnToggle);
-        card.appendChild(pDesc);
-        card.appendChild(btnAgregar);
-
-        // listeners
-        btnToggle.addEventListener("click", () => {
-          if (pDesc.classList.contains("oculto")) {
-            pDesc.classList.remove("oculto");
-            btnToggle.textContent = "Ver menos";
-          } else {
-            pDesc.classList.add("oculto");
-            btnToggle.textContent = "Ver más";
-          }
-        });
-
-        btnAgregar.addEventListener("click", () => {
-          if (typeof window.agregarAlCarrito === "function") {
-            try {
-              window.agregarAlCarrito(producto);
-            } catch (e) {
-              console.error("Error en agregarAlCarrito:", e);
-            }
-          } else {
-            console.log("agregarAlCarrito no definida — producto:", producto);
-            // si querés, podés mostrar feedback visual pequeño aquí
-          }
-        });
-
-        contenedor.appendChild(card);
-      });
-    })
-    .catch((err) => {
-      console.error("Error cargando productos.json:", err);
-      // Mensaje visible en la página
-      if (contenedor) {
-        contenedor.innerHTML =
-          "<p style='color:#c00'>Error cargando los productos. Mirá la consola para más info.</p>";
-      }
+    carrito.forEach((producto, idx) => {
+      const li = document.createElement("li");
+      li.textContent = `${producto.nombre} - $${producto.precio}`;
+      carritoLista.appendChild(li);
+      total += Number(producto.precio) || 0;
     });
+
+    carritoTotal.textContent = `Total: $${total}`;
+    cartCount.textContent = carrito.length;
+  }
+
+  // Función para cargar productos desde JSON y renderizarlos
+  function cargarProductos() {
+    fetch("productos.json")
+      .then(res => {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return res.json();
+      })
+      .then(productos => {
+        contenedor.innerHTML = ""; // limpiar contenedor
+        productos.forEach((producto, idx) => {
+          const card = document.createElement("div");
+          card.classList.add("producto");
+
+          // Imagen
+          const srcImg = producto.imagen || producto.img || producto.image || "";
+          const img = document.createElement("img");
+          img.alt = producto.nombre || "Producto";
+          img.src = srcImg;
+
+          // Nombre
+          const h3 = document.createElement("h3");
+          h3.textContent = producto.nombre;
+
+          // Precio
+          const pPrecio = document.createElement("p");
+          pPrecio.classList.add("precio");
+          pPrecio.textContent = producto.precio !== undefined ? `$${producto.precio}` : "";
+
+          // Botón toggle descripción
+          const btnToggle = document.createElement("button");
+          btnToggle.classList.add("toggle-desc");
+          btnToggle.textContent = "Ver más";
+
+          // Descripción
+          let descTexto = "";
+          if (Array.isArray(producto.descripcion)) {
+            descTexto = producto.descripcion.join("\n");
+          } else {
+            descTexto = producto.descripcion || "";
+          }
+          const pDesc = document.createElement("p");
+          pDesc.classList.add("descripcion", "oculto");
+          // convertir saltos de línea a <br>
+          pDesc.innerHTML = descTexto
+            .split("\n")
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .join("<br>");
+
+          // Botón de agregar al carrito
+          const btnAgregar = document.createElement("button");
+          btnAgregar.classList.add("agregar-carrito");
+          btnAgregar.textContent = "Agregar al carrito";
+
+          // Armado de la tarjeta
+          card.appendChild(img);
+          card.appendChild(h3);
+          card.appendChild(pPrecio);
+          card.appendChild(btnToggle);
+          card.appendChild(pDesc);
+          card.appendChild(btnAgregar);
+
+          // Eventos
+          btnToggle.addEventListener("click", () => {
+            if (pDesc.classList.contains("oculto")) {
+              pDesc.classList.remove("oculto");
+              btnToggle.textContent = "Ver menos";
+            } else {
+              pDesc.classList.add("oculto");
+              btnToggle.textContent = "Ver más";
+            }
+          });
+
+          btnAgregar.addEventListener("click", () => {
+            // Agregar al carrito
+            carrito.push(producto);
+            actualizarCarritoUI();
+          });
+
+          contenedor.appendChild(card);
+        });
+
+        // Inicializar la UI del carrito vacía
+        actualizarCarritoUI();
+      })
+      .catch(error => {
+        console.error("Error cargando productos:", error);
+        contenedor.innerHTML =
+          "<p style='color:red'>No se pudieron cargar los productos.</p>";
+      });
+  }
+
+  // Cargar productos al inicio
+  cargarProductos();
 });
+
 
 
 
