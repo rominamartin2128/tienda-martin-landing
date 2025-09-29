@@ -1,4 +1,3 @@
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -40,23 +39,50 @@ h2 {
   margin-bottom: 20px;
 }
 
+/* ==========================
+   PRODUCTOS / CATÁLOGO
+========================== */
 .productos-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 25px;
+  justify-content: center;
 }
 
 .product-card {
+  background: #fff;
   border: 1px solid #ddd;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
   text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
 }
 
 .product-card img {
-  max-width: 100%;
+  width: 100%;
+  max-width: 180px; /* hace que no sean gigantes */
   height: auto;
+  margin: 0 auto 10px;
+  display: block;
+  object-fit: contain;
   border-radius: 6px;
+}
+
+.product-card h3 {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.product-card p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
 }
 
 button {
@@ -67,18 +93,14 @@ button {
   margin-top: 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
 }
 
 button:hover {
   background: #0056b3;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 400px;
-}
 /* Descripciones desplegables */
 .descripcion {
   margin: 10px 0;
@@ -95,6 +117,20 @@ form {
   text-align: left;
 }
 
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width: 768px) {
+  .productos-container {
+    grid-template-columns: repeat(2, 1fr); /* tablets: 2 columnas */
+  }
+}
+
+@media (max-width: 480px) {
+  .productos-container {
+    grid-template-columns: 1fr; /* celulares: 1 columna */
+  }
+}
 
 
 
