@@ -242,6 +242,105 @@ h2 {
     max-width: 140px;
   }
 }
+/* ===== CATALOGO DE PRODUCTOS - solo afecta a las cards ===== */
+#catalogo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.producto {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: translateY(-5px);
+}
+
+.producto img {
+  width: 100%;
+  max-width: 160px; /* ancho máximo de las imágenes */
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+  object-fit: contain;
+}
+
+.producto h3 {
+  font-size: 1rem;
+  margin: 10px 0;
+  color: #333;
+}
+
+.producto p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.producto button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.producto button:hover {
+  background: #0056b3;
+}
+
+/* Descripciones desplegables */
+.descripcion {
+  margin: 10px 0;
+}
+
+.descripcion button {
+  background: #28a745;
+  padding: 6px 10px;
+  font-size: 14px;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.descripcion button:hover {
+  background: #218838;
+}
+
+.desc-text {
+  margin-top: 8px;
+  text-align: left;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #catalogo {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  #catalogo {
+    grid-template-columns: 1fr;
+  }
+
+  .producto img {
+    max-width: 140px;
+  }
+}
+
 
 
 
