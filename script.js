@@ -4,7 +4,7 @@ const carritoCount = document.getElementById("cart-count");
 document.addEventListener("DOMContentLoaded", () => {
   const catalogo = document.getElementById("catalogo");
 
-  // Productos de ejemplo
+  // ------------------ Productos de ejemplo ------------------
   const productos = [
     {
       nombre: "Producto 1",
@@ -26,10 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // Generar productos en el catálogo
   productos.forEach(producto => {
     const div = document.createElement("div");
-    div.classList.add("producto"); // Muy importante
+    div.classList.add("producto"); // importante
 
     div.innerHTML = `
       <img src="${producto.imagen}" alt="${producto.nombre}">
@@ -48,10 +47,9 @@ document.addEventListener("DOMContentLoaded", () => {
     catalogo.appendChild(div);
   });
 
-  // Menú hamburguesa
+  // ------------------ Menú hamburguesa ------------------
   const toggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".navbar .menu");
-
   toggle.addEventListener("click", () => {
     navMenu.classList.toggle("open");
   });
