@@ -78,6 +78,22 @@ form {
   gap: 10px;
   max-width: 400px;
 }
+/* Descripciones desplegables */
+.descripcion {
+  margin: 10px 0;
+}
+
+.descripcion button {
+  background: #28a745;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.desc-text {
+  margin-top: 8px;
+  text-align: left;
+}
+
 
 
 
