@@ -1,193 +1,142 @@
-// script.js — versión diagnóstica y robusta para depurar y funcionar
+// script.js — con carrito mejorado
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("[script.js] iniciando...");
+  console.log("[script.js] iniciado con carrito mejorado");
 
-  // Buscamos el contenedor donde se deben poner los productos
-  const posiblesIds = [
-    "productosContainer",
-    "catalogoContainer",
-    "catalogo",
-    "productos-container",
-    "catalogo-container"
-  ];
-  let contenedor = null;
-  let contenedorId = null;
-  for (const id of posiblesIds) {
-    const el = document.getElementById(id);
-    if (el) {
-      contenedor = el;
-      contenedorId = id;
-      console.log(`[script.js] contenedor encontrado: #${id}`);
-      break;
-    }
-  }
-
+  const contenedor = document.getElementById("productosContainer");
   if (!contenedor) {
-    const msg = `[script.js] ERROR: no se encontró ningún contenedor de productos. Buscados ids: ${posiblesIds.join(", ")}`;
-    console.error(msg);
-    // Mostrar mensaje visible en la página (si hay un <main>)
-    const main = document.querySelector("main") || document.body;
-    const aviso = document.createElement("div");
-    aviso.style.color = "white";
-    aviso.style.background = "#c00";
-    aviso.style.padding = "12px";
-    aviso.style.borderRadius = "6px";
-    aviso.textContent = "Error interno: no se encontró el contenedor de productos. Mirá la consola para detalles.";
-    main.prepend(aviso);
+    console.error("No se encontró #productosContainer");
     return;
   }
 
-  // Carrito
-  let carrito = [];
+  // --- CARRITO ---
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+  function guardarCarrito() {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+  }
 
   function actualizarCarritoUI() {
     const carritoLista = document.getElementById("carritoLista");
     const carritoTotal = document.getElementById("carritoTotal");
     const cartCount = document.getElementById("cart-count");
 
-    if (!carritoLista || !carritoTotal || !cartCount) {
-      console.warn("[script.js] Algunos elementos del carrito no se encuentran en el DOM (carritoLista/carritoTotal/cart-count).");
-      return;
-    }
+    if (!carritoLista || !carritoTotal || !cartCount) return;
 
     carritoLista.innerHTML = "";
     let total = 0;
-    carrito.forEach((p, i) => {
+
+    carrito.forEach((p, index) => {
       const li = document.createElement("li");
-      li.textContent = `${p.nombre || p.title || "Sin nombre"} - $${p.precio || 0}`;
+      li.innerHTML = `
+        ${p.nombre} - $${p.precio}
+        <button class="eliminar" data-index="${index}">❌</button>
+      `;
       carritoLista.appendChild(li);
       total += Number(p.precio) || 0;
     });
 
     carritoTotal.textContent = `Total: $${total}`;
     cartCount.textContent = carrito.length;
-  }
 
-  // Intentos de rutas donde puede estar productos.json
-  const posiblesRutas = [
-    "productos.json",
-    "./productos.json",
-    window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/") + "productos.json",
-    window.location.origin + "/tienda-martin-landing/productos.json",
-    "https://raw.githubusercontent.com/rominamartin2128/tienda-martin-landing/main/productos.json"
-  ];
+    // Botón vaciar carrito
+    let btnVaciar = document.getElementById("vaciarCarrito");
+    if (!btnVaciar) {
+      btnVaciar = document.createElement("button");
+      btnVaciar.id = "vaciarCarrito";
+      btnVaciar.textContent = "Vaciar carrito";
+      btnVaciar.style.marginTop = "10px";
+      carritoLista.parentElement.appendChild(btnVaciar);
 
-  async function intentarFetch() {
-    let lastError = null;
-    for (const ruta of posiblesRutas) {
-      try {
-        console.log(`[script.js] intentando fetch -> ${ruta}`);
-        const res = await fetch(ruta, { cache: "no-store" });
-        console.log(`[script.js] respuesta ${ruta}: status ${res.status}`);
-        if (!res.ok) {
-          lastError = `HTTP ${res.status} en ${ruta}`;
-          continue;
-        }
-        const json = await res.json();
-        console.log(`[script.js] JSON cargado desde ${ruta} (${Array.isArray(json) ? json.length : "no-array"})`);
-        return json;
-      } catch (err) {
-        console.warn(`[script.js] fallo fetch ${ruta}:`, err);
-        lastError = err;
-        // continuar con la siguiente ruta
-      }
+      btnVaciar.addEventListener("click", () => {
+        carrito = [];
+        guardarCarrito();
+        actualizarCarritoUI();
+      });
     }
-    throw new Error("No fue posible cargar productos.json. Último error: " + lastError);
-  }
 
-  function crearCard(producto) {
-    const card = document.createElement("div");
-    card.className = "producto";
-
-    // imagen (soporte varias claves)
-    const srcImg = producto.imagen || producto.img || producto.image || producto.src || "";
-    const img = document.createElement("img");
-    img.alt = producto.nombre || producto.title || "Producto";
-    if (srcImg) img.src = srcImg;
-    else img.src = ""; // dejar vacío si no hay ruta
-
-    // nombre
-    const h3 = document.createElement("h3");
-    h3.textContent = producto.nombre || producto.title || "Sin nombre";
-
-    // precio
-    const pPrecio = document.createElement("p");
-    pPrecio.className = "precio";
-    pPrecio.textContent = producto.precio !== undefined ? `$${producto.precio}` : "";
-
-    // descripción (array -> texto con saltos)
-    let descTexto = "";
-    if (Array.isArray(producto.descripcion)) descTexto = producto.descripcion.join("\n");
-    else descTexto = producto.descripcion || "";
-
-    const btnToggle = document.createElement("button");
-    btnToggle.className = "toggle-desc";
-    btnToggle.type = "button";
-    btnToggle.textContent = "Ver más";
-
-    const pDesc = document.createElement("p");
-    pDesc.className = "descripcion oculto";
-    pDesc.innerHTML = descTexto.split("\n").map(l => l.trim()).filter(Boolean).join("<br>");
-
-    const btnAgregar = document.createElement("button");
-    btnAgregar.className = "agregar-carrito";
-    btnAgregar.type = "button";
-    btnAgregar.textContent = "Agregar al carrito";
-
-    // Append
-    card.appendChild(img);
-    card.appendChild(h3);
-    card.appendChild(pPrecio);
-    card.appendChild(btnToggle);
-    card.appendChild(pDesc);
-    card.appendChild(btnAgregar);
-
-    // Listeners
-    btnToggle.addEventListener("click", () => {
-      if (pDesc.classList.contains("oculto")) {
-        pDesc.classList.remove("oculto");
-        btnToggle.textContent = "Ver menos";
-      } else {
-        pDesc.classList.add("oculto");
-        btnToggle.textContent = "Ver más";
-      }
+    // Listeners eliminar individuales
+    document.querySelectorAll(".eliminar").forEach(btn => {
+      btn.addEventListener("click", e => {
+        const index = e.target.dataset.index;
+        carrito.splice(index, 1);
+        guardarCarrito();
+        actualizarCarritoUI();
+      });
     });
 
-    btnAgregar.addEventListener("click", () => {
-      carrito.push(producto);
-      actualizarCarritoUI();
-    });
-
-    return card;
+    guardarCarrito();
   }
 
-  // Cargar y renderizar productos
-  (async () => {
+  // --- CARGAR PRODUCTOS ---
+  async function cargarProductos() {
     try {
-      const productos = await intentarFetch();
-      if (!Array.isArray(productos) || productos.length === 0) {
-        contenedor.innerHTML = "<p>No hay productos para mostrar.</p>";
-        console.warn("[script.js] productos vacío o no array:", productos);
-        return;
-      }
+      const res = await fetch("productos.json");
+      if (!res.ok) throw new Error("Error HTTP: " + res.status);
+      const productos = await res.json();
 
-      // limpiar
       contenedor.innerHTML = "";
-      productos.forEach(prod => {
-        const card = crearCard(prod);
+      productos.forEach(producto => {
+        const card = document.createElement("div");
+        card.className = "producto";
+
+        const img = document.createElement("img");
+        img.src = producto.imagen;
+        img.alt = producto.nombre;
+
+        const h3 = document.createElement("h3");
+        h3.textContent = producto.nombre;
+
+        const pPrecio = document.createElement("p");
+        pPrecio.className = "precio";
+        pPrecio.textContent = `$${producto.precio}`;
+
+        const btnDesc = document.createElement("button");
+        btnDesc.textContent = "Ver más";
+        btnDesc.className = "toggle-desc";
+
+        const pDesc = document.createElement("p");
+        pDesc.className = "descripcion oculto";
+        pDesc.innerHTML = Array.isArray(producto.descripcion)
+          ? producto.descripcion.join("<br>")
+          : producto.descripcion;
+
+        const btnAgregar = document.createElement("button");
+        btnAgregar.textContent = "Agregar al carrito";
+        btnAgregar.className = "agregar-carrito";
+
+        // Eventos
+        btnDesc.addEventListener("click", () => {
+          pDesc.classList.toggle("oculto");
+          btnDesc.textContent = pDesc.classList.contains("oculto")
+            ? "Ver más"
+            : "Ver menos";
+        });
+
+        btnAgregar.addEventListener("click", () => {
+          carrito.push(producto);
+          guardarCarrito();
+          actualizarCarritoUI();
+        });
+
+        // Armar card
+        card.appendChild(img);
+        card.appendChild(h3);
+        card.appendChild(pPrecio);
+        card.appendChild(btnDesc);
+        card.appendChild(pDesc);
+        card.appendChild(btnAgregar);
+
         contenedor.appendChild(card);
       });
 
-      // inicializar carrito UI
       actualizarCarritoUI();
-      console.log("[script.js] productos renderizados OK.");
     } catch (err) {
-      console.error("[script.js] Error definitivo al cargar productos:", err);
-      contenedor.innerHTML = `<p style="color:#c00">Error cargando productos. Mirá la consola (F12) para más detalles.</p>`;
+      console.error("Error cargando productos:", err);
+      contenedor.innerHTML = "<p style='color:red'>Error al cargar productos.</p>";
     }
-  })();
+  }
+
+  cargarProductos();
 });
-
-
 
 
