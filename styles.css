@@ -1,48 +1,32 @@
-/* --- HEADER (navbar) --- */
+/* HEADER Y NAVBAR */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
   gap: 20px;
-  padding: 1rem 2rem;
-  background: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.navbar h1 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  font-size: 24px;
 }
 
-/* navegación */
 .navbar nav ul {
   display: flex;
-  gap: 1.5rem;
   list-style: none;
+  gap: 15px;
   margin: 0;
   padding: 0;
 }
 
 .navbar nav ul li a {
   text-decoration: none;
-  color: #444;
+  color: #333;
   font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.navbar nav ul li a:hover {
-  color: #e07a5f;
-}
-
-/* --- LOGIN (lo tuyo se mantiene) --- */
-#loginSection {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 #loginSection input {
@@ -73,28 +57,27 @@
   color: #333;
 }
 
-/* carrito y login juntos */
 .navbar > .carrito,
 .navbar > #loginSection {
   display: inline-flex;
   align-items: center;
 }
 
-/* --- CATÁLOGO --- */
+/* CATÁLOGO */
 .catalogo {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 20px;
+  padding: 20px;
 }
 
 .producto {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  overflow: hidden;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 15px;
   text-align: center;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s;
 }
 
 .producto:hover {
@@ -103,77 +86,70 @@
 
 .producto img {
   width: 100%;
-  height: 250px;
-  object-fit: cover; /* asegura proporción */
-  border-bottom: 1px solid #eee;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .producto h3 {
-  font-size: 1.1rem;
-  color: #333;
-  margin: 0.8rem 0 0.4rem;
+  margin: 10px 0 5px 0;
+  font-size: 18px;
 }
 
-.producto p {
-  font-size: 0.9rem;
-  color: #666;
-  padding: 0 1rem;
+.producto ul {
+  text-align: left;
+  font-size: 14px;
+  margin: 5px 0;
+  padding-left: 20px;
+}
+
+.producto .precio {
+  font-weight: bold;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #a75d8e;
 }
 
 .producto button {
-  margin: 1rem 0;
-  padding: 0.6rem 1.2rem;
-  background: #e07a5f;
-  color: white;
+  margin-top: 10px;
+  padding: 8px 12px;
   border: none;
-  border-radius: 6px;
+  background-color: #a75d8e;
+  color: white;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 500;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
 .producto button:hover {
-  background: #cf5f43;
+  background-color: #8d4a76;
 }
-/* --- MEDIA QUERY MOBILE --- */
-@media (max-width: 768px) {
-  .navbar {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
 
-  /* ocultamos el menú normal */
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
   .navbar nav ul {
     display: none;
     flex-direction: column;
-    width: 100%;
-    background: #f8f8f8;
-    border-top: 1px solid #ddd;
-    padding: 1rem 0;
+    gap: 10px;
+    background-color: #fff;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
-
-  /* botón hamburguesa */
-  .menu-toggle {
-    display: block;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: #333;
-  }
-
-  /* cuando se active la clase "open" */
   .navbar nav ul.open {
     display: flex;
   }
+}
 
-  /* catálogo más compacto */
+@media (max-width: 600px) {
   .catalogo {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .producto img {
-    height: 200px;
+    grid-template-columns: 1fr;
   }
 }
 
