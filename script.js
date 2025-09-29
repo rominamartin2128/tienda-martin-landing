@@ -60,15 +60,35 @@ document.addEventListener("DOMContentLoaded", () => {
         const div = document.createElement("div");
         div.classList.add("producto");
 
+        // HTML del producto con desplegable
         div.innerHTML = `
           <img src="${producto.imagen}" alt="${producto.nombre}">
           <h3>${producto.nombre}</h3>
-          <ul>${producto.descripcion.map(d => `<li>${d}</li>`).join("")}</ul>
+
+          <button class="toggle-desc">Mostrar descripción ▼</button>
+          <ul class="descripcion" style="display:none;">
+            ${producto.descripcion.map(d => `<li>${d}</li>`).join("")}
+          </ul>
+
           <p class="precio">$${producto.precio.toLocaleString()}</p>
           <button>Agregar al carrito</button>
         `;
 
-        div.querySelector("button").addEventListener("click", () => {
+        // Evento desplegable
+        const toggleBtn = div.querySelector(".toggle-desc");
+        const desc = div.querySelector(".descripcion");
+        toggleBtn.addEventListener("click", () => {
+          if (desc.style.display === "none") {
+            desc.style.display = "block";
+            toggleBtn.textContent = "Ocultar descripción ▲";
+          } else {
+            desc.style.display = "none";
+            toggleBtn.textContent = "Mostrar descripción ▼";
+          }
+        });
+
+        // Evento botón agregar al carrito
+        div.querySelector("button:last-of-type").addEventListener("click", () => {
           carrito.push(producto);
           carritoCount.textContent = carrito.length;
           alert(`${producto.nombre} agregado al carrito`);
@@ -86,6 +106,4 @@ document.addEventListener("DOMContentLoaded", () => {
     navMenu.classList.toggle("open");
   });
 });
-
-
 
