@@ -52,8 +52,8 @@ const carritoCount = document.getElementById("cart-count");
 document.addEventListener("DOMContentLoaded", () => {
   const catalogo = document.getElementById("catalogo");
 
-  // Cargar productos desde tu JSON
-  fetch("productos.json")
+  // ------------------ CARGAR PRODUCTOS DESDE JSON EN GITHUB PAGES ------------------
+  fetch("https://rominamartin2128.github.io/tienda-martin-landing/productos.json")
     .then(res => res.json())
     .then(productos => {
       productos.forEach(producto => {
@@ -79,12 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => console.error("Error al cargar productos:", err));
 
-  // Menú hamburguesa
+  // ------------------ MENÚ HAMBURGUESA ------------------
   const toggle = document.querySelector(".menu-toggle");
   const navMenu = document.querySelector(".navbar .menu");
   toggle.addEventListener("click", () => {
     navMenu.classList.toggle("open");
   });
 });
+
 
 
