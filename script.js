@@ -1,3 +1,51 @@
+// ------------------ IMPORTS ------------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+import emailjs from "https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js";
+
+// ------------------ FIREBASE LOGIN ------------------
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_AUTH_DOMAIN",
+  projectId: "TU_PROJECT_ID",
+  storageBucket: "TU_BUCKET",
+  messagingSenderId: "TU_SENDER_ID",
+  appId: "TU_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const loginBtn = document.getElementById("btnLogin");
+const logoutBtn = document.getElementById("btnLogout");
+const userDisplay = document.getElementById("userDisplay");
+
+loginBtn.addEventListener("click", () => {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Login exitoso"))
+    .catch(err => alert("Error de login: " + err.message));
+});
+
+logoutBtn.addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    userDisplay.textContent = `Hola, ${user.email}`;
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+  } else {
+    userDisplay.textContent = "";
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+  }
+});
+
+// ------------------ EMAILJS ------------------
+emailjs.init("TU_PUBLIC_KEY"); // Public key de EmailJS
+
+// ------------------ CARRITO Y CATÁLOGO ------------------
 let carrito = [];
 const catalogo = document.getElementById("catalogo");
 const carritoContainer = document.getElementById("itemsCarrito");
@@ -54,16 +102,33 @@ function actualizarCarrito() {
   totalDiv.textContent = "Total: $" + carrito.reduce((sum, p) => sum + p.precio, 0).toLocaleString();
 }
 
-// Botón finalizar compra (solo alerta por ahora)
+// ------------------ FINALIZAR COMPRA ------------------
 document.getElementById("btnFinalizarCompra").addEventListener("click", () => {
   if (carrito.length === 0) {
     alert("El carrito está vacío");
     return;
   }
+
   const lista = carrito.map(p => `${p.nombre} - $${p.precio.toLocaleString()}`).join("\n");
   const total = carrito.reduce((sum, p) => sum + p.precio, 0);
-  alert(`Orden:\n${lista}\n\nTotal: $${total.toLocaleString()}\n\nAquí se podría integrar EmailJS o Mercado Pago.`);
+
+  // Enviar correo con EmailJS
+  const templateParams = {
+    usuario: userDisplay.textContent || "Invitado",
+    pedido: lista,
+    total: `$${total.toLocaleString()}`
+  };
+
+  emailjs.send("service_sby0arr", "template_onftb26", templateParams)
+    .then(() => alert("Orden enviada por correo!"))
+    .catch(err => alert("Error enviando correo: " + err));
 });
 
+// ------------------ MENU HAMBURGUESA ------------------
+const toggle = document.querySelector(".menu-toggle");
+const navMenu = document.querySelector(".navbar ul");
 
+toggle.addEventListener("click", () => {
+  navMenu.classList.toggle("open");
+});
 
