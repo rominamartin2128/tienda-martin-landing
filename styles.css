@@ -1,6 +1,4 @@
-/* ==========================
-   ESTILOS GENERALES
-========================== */
+/* ================ estilos previos ================ */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -42,9 +40,7 @@ h2 {
   margin-bottom: 20px;
 }
 
-/* ==========================
-   CATALOGO DE PRODUCTOS
-========================== */
+/* ================ catálogo de productos ================ */
 #productosContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -81,13 +77,43 @@ h2 {
   color: #333;
 }
 
-.producto p {
+.producto .precio {
   font-size: 0.9rem;
   color: #666;
-  margin-bottom: 10px;
+  margin: 10px 0;
 }
 
-.producto button {
+/* Botón de descripción desplegable */
+.toggle-desc {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: background 0.2s ease;
+}
+
+.toggle-desc:hover {
+  background: #218838;
+}
+
+.descripcion {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin: 8px 0;
+  text-align: left;
+}
+
+/* Oculto por defecto */
+.oculto {
+  display: none;
+}
+
+/* Botón de agregar al carrito */
+.agregar-carrito {
   background: #007bff;
   color: #fff;
   border: none;
@@ -96,39 +122,14 @@ h2 {
   cursor: pointer;
   font-size: 0.9rem;
   transition: background 0.2s ease;
+  margin-top: 10px;
 }
 
-.producto button:hover {
+.agregar-carrito:hover {
   background: #0056b3;
 }
 
-/* Descripciones desplegables */
-.descripcion {
-  margin: 10px 0;
-}
-
-.descripcion button {
-  background: #28a745;
-  padding: 6px 10px;
-  font-size: 14px;
-  border: none;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.descripcion button:hover {
-  background: #218838;
-}
-
-.desc-text {
-  margin-top: 8px;
-  text-align: left;
-}
-
-/* ==========================
-   RESPONSIVE
-========================== */
+/* ================ responsive ================ */
 @media (max-width: 768px) {
   #productosContainer {
     grid-template-columns: repeat(2, 1fr);
@@ -144,3 +145,4 @@ h2 {
     max-width: 140px;
   }
 }
+
