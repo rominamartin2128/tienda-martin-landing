@@ -58,5 +58,45 @@
 #vaciarCarrito:hover {
   background: #e68900;
 }
+/* Fondo general */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url("img/fondo-dermocosmetica.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: #333;
+}
+
+/* Secciones como tarjetas sobre el fondo */
+section {
+  background-color: rgba(255, 255, 255, 0.9); /* semitransparente */
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 1000px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+h2, h3 {
+  color: #2e4053; /* tono elegante gris-azulado */
+}
+
+/* Botones */
+button {
+  background-color: #5dade2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3498db;
+}
+
 
 
