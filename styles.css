@@ -63,7 +63,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: url("img/fondo-dermocosmetica.jpg") no-repeat center center fixed;
+  background: url("./img/fondo-dermocosmetica.jpg") no-repeat center center fixed;
   background-size: cover;
   color: #333;
 }
@@ -97,6 +97,7 @@ button {
 button:hover {
   background-color: #3498db;
 }
+
 
 
 
