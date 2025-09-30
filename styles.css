@@ -153,6 +153,27 @@ button:hover {
   font-size: 1.2rem;
   cursor: pointer;
 }
+/* Botón Simular Pago */
+#carrito button {
+  background-color: #ff6f61; /* color principal del botón */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#carrito button:hover {
+  background-color: #ff4f41;
+  transform: translateY(-2px);
+}
+
+#carrito button:active {
+  transform: translateY(0);
+}
+
 
 
 
