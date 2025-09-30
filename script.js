@@ -167,5 +167,69 @@ document.addEventListener("DOMContentLoaded", () => {
     let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuario = usuarios.find(u => u.email === email && u.password === password);
     if(usuario){
-      localStorage.setItem("
+      localStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
+      alert("Login exitoso");
+      loginModal.style.display = "none";
+      formLogin.reset();
+      actualizarBotonLogin();
+    } else {
+      alert("Email o contraseña incorrectos");
+    }
+  });
 
+  function actualizarBotonLogin(){
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    if(usuario){
+      btnAbrirLogin.textContent = `Bienvenida, ${usuario.nombre}`;
+    } else {
+      btnAbrirLogin.textContent = "Login / Registro";
+    }
+  }
+
+  actualizarBotonLogin();
+
+  // ----------------- ENVÍO ORDEN EMAILJS -----------------
+  function enviarOrdenEmail(productos, total) {
+    let usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    if (!usuario) {
+      alert("Debes iniciar sesión para enviar la orden");
+      return;
+    }
+
+    const templateParams = {
+      nombre: usuario.nombre,
+      email: usuario.email,
+      productos: productos.map(p => `${p.nombre} x1`).join(", "),
+      total: total
+    };
+
+    emailjs.send('service_5ro55v9', 'template_k4zk30a', templateParams, 'bIjrBOVKEdjncZDpG')
+      .then(() => alert("Orden enviada correctamente"))
+      .catch(err => alert("Error al enviar la orden: " + err));
+  }
+
+  // ----------------- PAGO SIMULADO LOCAL -----------------
+  const btnPagoSimulado = document.createElement("button");
+  btnPagoSimulado.textContent = "Simular Pago";
+  btnPagoSimulado.style.marginTop = "10px";
+
+  btnPagoSimulado.addEventListener("click", () => {
+    if(carrito.length === 0){
+      alert("Tu carrito está vacío");
+      return;
+    }
+
+    const total = carrito.reduce((acc, p) => acc + Number(p.precio || 0), 0);
+    alert(`Pago simulado aprobado! Total: $${total}`);
+
+    // Enviar orden por EmailJS
+    enviarOrdenEmail(carrito, total);
+
+    // Vaciar carrito automáticamente
+    carrito = [];
+    guardarCarrito();
+    actualizarCarritoUI();
+  });
+
+  document.getElementById("carrito").appendChild(btnPagoSimulado);
+});
