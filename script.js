@@ -123,7 +123,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const formRegistro = document.getElementById("formRegistro");
   const formLogin = document.getElementById("formLogin");
 
-  // Abrir / cerrar modal
   btnAbrirLogin.addEventListener("click", () => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
     if(usuario){
@@ -141,7 +140,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cerrarModal.addEventListener("click", () => loginModal.style.display = "none");
   window.addEventListener("click", e => { if(e.target == loginModal) loginModal.style.display = "none"; });
 
-  // Registro
   formRegistro.addEventListener("submit", e => {
     e.preventDefault();
     const nombre = document.getElementById("regNombre").value;
@@ -161,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
     actualizarBotonLogin();
   });
 
-  // Login
   formLogin.addEventListener("submit", e => {
     e.preventDefault();
     const email = document.getElementById("loginEmail").value;
@@ -170,56 +167,5 @@ document.addEventListener("DOMContentLoaded", () => {
     let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
     let usuario = usuarios.find(u => u.email === email && u.password === password);
     if(usuario){
-      localStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
-      alert("Login exitoso");
-      loginModal.style.display = "none";
-      formLogin.reset();
-      actualizarBotonLogin();
-    } else {
-      alert("Email o contraseña incorrectos");
-    }
-  });
-
-  function actualizarBotonLogin(){
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
-    if(usuario){
-      btnAbrirLogin.textContent = `Bienvenida, ${usuario.nombre}`;
-    } else {
-      btnAbrirLogin.textContent = "Login / Registro";
-    }
-  }
-
-  actualizarBotonLogin();
-
-  // ----------------- ENVÍO ORDEN EMAILJS -----------------
-  function enviarOrdenEmail(productos, total) {
-    let usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
-    if (!usuario) {
-      alert("Debes iniciar sesión para enviar la orden");
-      return;
-    }
-
-    const templateParams = {
-      nombre: usuario.nombre,
-      email: usuario.email,
-      productos: productos.map(p => `${p.nombre} x1`).join(", "),
-      total: total
-    };
-
-    emailjs.send('service_5ro55v9', 'template_k4zk30a', templateParams, 'bIjrBOVKEdjncZDpG')
-      .then(() => alert("Orden enviada correctamente"))
-      .catch(err => alert("Error al enviar la orden: " + err));
-  }
-
-  // Botón enviar orden
-  const btnEnviarOrden = document.createElement("button");
-  btnEnviarOrden.textContent = "Enviar Orden por Email";
-  btnEnviarOrden.addEventListener("click", () => {
-    let total = carrito.reduce((acc, p) => acc + Number(p.precio || 0), 0);
-    enviarOrdenEmail(carrito, total);
-  });
-  document.getElementById("carrito").appendChild(btnEnviarOrden);
-});
-
-
+      localStorage.setItem("
 
