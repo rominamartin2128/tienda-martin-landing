@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     guardarCarrito();
   }
 
-  vaciarCarrito.addEventListener("click", () => {
+  document.getElementById("vaciarCarrito").addEventListener("click", () => {
     carrito = [];
     guardarCarrito();
     actualizarCarritoUI();
@@ -120,13 +120,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnAbrirLogin = document.getElementById("btnAbrirLogin");
   const loginModal = document.getElementById("loginModal");
   const cerrarModal = document.getElementById("cerrarModal");
+  const formRegistro = document.getElementById("formRegistro");
+  const formLogin = document.getElementById("formLogin");
 
-  btnAbrirLogin.addEventListener("click", () => loginModal.style.display = "block");
+  // Abrir / cerrar modal
+  btnAbrirLogin.addEventListener("click", () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    if(usuario){
+      const cerrar = confirm("¿Deseas cerrar sesión?");
+      if(cerrar){
+        localStorage.removeItem("usuarioLogueado");
+        actualizarBotonLogin();
+        alert("Has cerrado sesión");
+      }
+    } else {
+      loginModal.style.display = "block";
+    }
+  });
+
   cerrarModal.addEventListener("click", () => loginModal.style.display = "none");
   window.addEventListener("click", e => { if(e.target == loginModal) loginModal.style.display = "none"; });
 
   // Registro
-  const formRegistro = document.getElementById("formRegistro");
   formRegistro.addEventListener("submit", e => {
     e.preventDefault();
     const nombre = document.getElementById("regNombre").value;
@@ -143,10 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("usuarios", JSON.stringify(usuarios));
     alert("Registro exitoso");
     formRegistro.reset();
+    actualizarBotonLogin();
   });
 
   // Login
-  const formLogin = document.getElementById("formLogin");
   formLogin.addEventListener("submit", e => {
     e.preventDefault();
     const email = document.getElementById("loginEmail").value;
@@ -159,10 +174,22 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Login exitoso");
       loginModal.style.display = "none";
       formLogin.reset();
+      actualizarBotonLogin();
     } else {
       alert("Email o contraseña incorrectos");
     }
   });
+
+  function actualizarBotonLogin(){
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogueado"));
+    if(usuario){
+      btnAbrirLogin.textContent = `Bienvenida, ${usuario.nombre}`;
+    } else {
+      btnAbrirLogin.textContent = "Login / Registro";
+    }
+  }
+
+  actualizarBotonLogin();
 
   // ----------------- ENVÍO ORDEN EMAILJS -----------------
   function enviarOrdenEmail(productos, total) {
@@ -192,7 +219,6 @@ document.addEventListener("DOMContentLoaded", () => {
     enviarOrdenEmail(carrito, total);
   });
   document.getElementById("carrito").appendChild(btnEnviarOrden);
-
 });
 
 
